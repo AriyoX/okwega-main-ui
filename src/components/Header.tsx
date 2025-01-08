@@ -9,10 +9,10 @@ interface HeaderProps {
 
 export function Header({ user }: HeaderProps) {
   return (
-    <header className="h-16 bg-white border-b border-gray-200 fixed top-0 right-0 left-64 z-10">
-      <div className="h-full px-6 flex items-center justify-between">
+    <header className="h-16 bg-white border-b border-gray-200 fixed top-0 right-0 left-0 z-20">
+      <div className="h-full px-4 lg:px-6 flex items-center justify-between">
         <div className="flex-1 flex items-center">
-          <div className="max-w-lg w-full lg:max-w-xs relative">
+          <div className="max-w-lg w-full lg:max-w-xs relative hidden md:block">
             <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
               <Search className="h-5 w-5 text-gray-400" />
             </div>
@@ -25,8 +25,8 @@ export function Header({ user }: HeaderProps) {
         </div>
         
         <div className="flex items-center space-x-4">
-          <button className="p-2 text-gray-400 hover:text-gray-500 focus:outline-none">
-            <Bell className="h-6 w-6" />
+          <button className="p-2 text-gray-400 hover:text-gray-500">
+            <Bell className="h-5 w-5" />
           </button>
           
           <div className="flex items-center">
@@ -37,11 +37,11 @@ export function Header({ user }: HeaderProps) {
                 alt={user.name}
               />
             ) : (
-              <div className="h-8 w-8 rounded-full bg-blue-500 flex items-center justify-center text-white">
+              <div className="h-8 w-8 rounded-full bg-blue-500 flex items-center justify-center">
                 {user.name.charAt(0)}
               </div>
             )}
-            <span className="ml-2 text-sm font-medium text-gray-700">
+            <span className="ml-2 text-sm font-medium text-gray-700 hidden md:block">
               {user.name}
             </span>
           </div>

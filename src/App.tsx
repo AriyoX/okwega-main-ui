@@ -1,18 +1,27 @@
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import { MentorDashboard } from './pages/MentorDashboard';
 import { MenteeDashboard } from './pages/MenteeDashboard';
-import './index.css'; // Add this import
+import { Header } from './components/Header';
+import './index.css';
 
 function App() {
-  // In a real app, this would be determined by authentication
-  const userRole = 'mentor'; // or 'mentee'
+  const userRole = 'mentee';
+  const user = {
+    name: 'John Doe',
+    avatar: undefined
+  };
 
   return (
     <Router>
       <Routes>
         <Route 
           path="/" 
-          element={userRole === 'mentor' ? <MentorDashboard /> : <MenteeDashboard />} 
+          element={
+            <>
+              <Header user={user} />
+              {userRole === 'mentor' ? <MentorDashboard /> : <MenteeDashboard />}
+            </>
+          } 
         />
       </Routes>
     </Router>

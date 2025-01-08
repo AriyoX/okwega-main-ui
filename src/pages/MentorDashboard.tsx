@@ -1,4 +1,4 @@
-import { Users, BookOpen, Clock, Calendar, Bell } from 'lucide-react';
+import { Users, BookOpen, Clock, Calendar } from 'lucide-react';
 import { Sidebar } from '../components/Sidebar';
 
 const upcomingSessions = [
@@ -51,21 +51,16 @@ const recentMessages = [
 
 export function MentorDashboard() {
   return (
-    <div className="flex min-h-screen bg-gray-50">
+    <div className="flex flex-col lg:flex-row min-h-screen bg-gray-50 pt-16">
       <Sidebar role="mentor" />
       
-      <main className="flex-1 p-8">
+      <main className="flex-1 p-4 lg:p-8">
         <div className="max-w-7xl mx-auto">
           <div className="flex items-center justify-between mb-8">
             <h1 className="text-2xl font-semibold">Dashboard</h1>
-            <div className="flex items-center space-x-4">
-              <button className="p-2 text-gray-400 hover:text-gray-500">
-                <Bell className="w-6 h-6" />
-              </button>
-            </div>
           </div>
 
-          <div className="grid grid-cols-4 gap-6 mb-8">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 lg:gap-6 mb-8">
             <div className="bg-white p-6 rounded-lg">
               <div className="flex items-center">
                 <Users className="w-8 h-8 text-blue-600" />
@@ -107,7 +102,7 @@ export function MentorDashboard() {
             </div>
           </div>
 
-          <div className="grid grid-cols-2 gap-6">
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 lg:gap-6">
             <div className="bg-white rounded-lg p-6">
               <h2 className="text-lg font-medium mb-4">Upcoming Sessions</h2>
               <div className="space-y-4">
