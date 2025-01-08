@@ -1,9 +1,12 @@
-import { Bell, Search, Menu, Compass } from 'lucide-react';
+import { Bell, Search, Menu, User, Compass, Settings, LogOut, HelpCircle } from 'lucide-react';
 import { useState, useRef, useEffect } from 'react';
+import { Link } from 'react-router-dom';
 
 interface User {
   name: string;
+  email?: string;
   avatar?: string;
+  role?: string;
 }
 
 interface HeaderProps {
@@ -23,7 +26,9 @@ interface Notification {
 export function Header({ user, onMenuClick }: HeaderProps) {
   const [isSearchOpen, setIsSearchOpen] = useState(false);
   const [showNotifications, setShowNotifications] = useState(false);
+  const [showProfile, setShowProfile] = useState(false);
   const notificationRef = useRef<HTMLDivElement>(null);
+  const profileRef = useRef<HTMLDivElement>(null);
 
   // Sample notifications - in a real app, these would come from a backend
   const notifications: Notification[] = [
@@ -59,6 +64,9 @@ export function Header({ user, onMenuClick }: HeaderProps) {
       if (notificationRef.current && !notificationRef.current.contains(event.target as Node)) {
         setShowNotifications(false);
       }
+      if (profileRef.current && !profileRef.current.contains(event.target as Node)) {
+        setShowProfile(false);
+      }
     }
 
     document.addEventListener('mousedown', handleClickOutside);
@@ -68,6 +76,11 @@ export function Header({ user, onMenuClick }: HeaderProps) {
   // Get unread notification count
   const unreadCount = notifications.filter(n => !n.read).length;
 
+  const handleLogout = () => {
+    // Implement your logout logic here
+    console.log('Logging out...');
+  };
+  
   const getNotificationIcon = (type: Notification['type']) => {
     switch (type) {
       case 'message':
@@ -196,7 +209,91 @@ export function Header({ user, onMenuClick }: HeaderProps) {
               )}
             </div>
             
-            {/* User Profile */}
+            {/* Profile Dropdown */}
+            <div className="relative" ref={profileRef}>
+              <button
+                className="flex items-center space-x-3 p-1.5 rounded-lg hover:bg-gray-100 transition-colors duration-200"
+                onClick={() => setShowProfile(!showProfile)}
+              >
+                {user.avatar ? (
+                  <img
+                    className="h-8 w-8 rounded-full object-cover border border-gray-200"
+                    src={user.avatar}
+                    alt={user.name}
+                  />
+                ) : (
+                  <div className="h-8 w-8 rounded-full bg-blue-600 flex items-center justify-center">
+                    <span className="text-sm font-medium text-white">
+                      {user.name.charAt(0)}
+                    </span>
+                  </div>
+                )}
+                <div className="hidden lg:block text-left">
+                  <p className="text-sm font-medium text-gray-700">{user.name}</p>
+                  {user.role && (
+                    <p className="text-xs text-gray-500 capitalize">{user.role}</p>
+                  )}
+                </div>
+              </button>
+
+              {/* Profile Dropdown Menu */}
+              {showProfile && (
+                <div className="absolute right-0 mt-2 w-64 bg-white rounded-lg shadow-lg border border-gray-200 py-1 z-50">
+                  {/* Profile Header */}
+                  <div className="px-4 py-3 border-b border-gray-100">
+                    <p className="text-sm font-semibold text-gray-900">{user.name}</p>
+                    {user.email && (
+                      <p className="text-sm text-gray-500 truncate">{user.email}</p>
+                    )}
+                  </div>
+
+                  {/* Menu Items */}
+                  <div className="py-1">
+                    <Link
+                      to="/profile"
+                      className="flex items-center px-4 py-2 text-sm text-gray-700 hover:bg-gray-50"
+                      onClick={() => setShowProfile(false)}
+                    >
+                      <User className="h-4 w-4 mr-3" />
+                      View Profile
+                    </Link>
+
+                    <Link
+                      to="/settings"
+                      className="flex items-center px-4 py-2 text-sm text-gray-700 hover:bg-gray-50"
+                      onClick={() => setShowProfile(false)}
+                    >
+                      <Settings className="h-4 w-4 mr-3" />
+                      Settings
+                    </Link>
+
+                    <Link
+                      to="/help"
+                      className="flex items-center px-4 py-2 text-sm text-gray-700 hover:bg-gray-50"
+                      onClick={() => setShowProfile(false)}
+                    >
+                      <HelpCircle className="h-4 w-4 mr-3" />
+                      Help & Support
+                    </Link>
+                  </div>
+
+                  {/* Logout */}
+                <div className="py-1 border-t border-gray-100">
+                  <button
+                    onClick={() => {
+                      handleLogout();
+                      setShowProfile(false);
+                    }}
+                    className="flex w-full items-center px-4 py-2 text-sm text-red-600 hover:bg-red-50"
+                  >
+                    <LogOut className="h-4 w-4 mr-3" />
+                    Log Out
+                  </button>
+                </div>
+              </div>
+            )}
+            
+            {/* User Profile
             <div className="flex items-center">
               {user.avatar ? (
                 <img
@@ -215,6 +312,7 @@ export function Header({ user, onMenuClick }: HeaderProps) {
                 {user.name}
               </span>
             </div>
+             */}
           </div>
         </div>
       </div>
@@ -237,6 +335,7 @@ export function Header({ user, onMenuClick }: HeaderProps) {
           </div>
         </div>
       )}
+      </div>
     </header>
   );
 }
