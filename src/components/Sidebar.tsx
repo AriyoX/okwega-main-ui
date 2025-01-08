@@ -1,5 +1,5 @@
 import React from 'react';
-import { Home, Calendar, Users, MessageSquare, Bell, Settings, BookOpen } from 'lucide-react';
+import { Home, Calendar, List, Users, MessageSquare, Folder, Settings, BookOpen, BarChart2 } from 'lucide-react';
 import { Link, useLocation } from 'react-router-dom';
 
 interface NavItem {
@@ -18,19 +18,21 @@ export function Sidebar({ role }: SidebarProps) {
   const mentorNavItems: NavItem[] = [
     { icon: Home, label: 'Dashboard', path: '/dashboard' },
     { icon: Users, label: 'Mentees', path: '/mentees' },
-    { icon: Calendar, label: 'Sessions', path: '/sessions' },
+    { icon: List, label: 'Sessions', path: '/sessions' },
+    { icon: Calendar, label: 'Calendar', path: '/calendar' },
     { icon: MessageSquare, label: 'Messages', path: '/messages' },
-    { icon: BookOpen, label: 'Resources', path: '/resources' },
-    { icon: Bell, label: 'Notifications', path: '/notifications' },
+    { icon: Folder, label: 'Resources', path: '/resources' },
+    { icon: BarChart2, label: 'Analytics', path: '/analytics' },
     { icon: Settings, label: 'Settings', path: '/settings' },
   ];
 
   const menteeNavItems: NavItem[] = [
     { icon: Home, label: 'Overview', path: '/dashboard' },
-    { icon: BookOpen, label: 'Learning Path', path: '/learning-path' },
+    { icon: Users, label: 'Find Mentors', path: '/mentors' },
     { icon: Calendar, label: 'My Sessions', path: '/sessions' },
+    { icon: BookOpen, label: 'Learning Path', path: '/learning-path' },
     { icon: MessageSquare, label: 'Messages', path: '/messages' },
-    { icon: Bell, label: 'Notifications', path: '/notifications' },
+    { icon: Folder, label: 'Resources', path: '/resources' },
     { icon: Settings, label: 'Settings', path: '/settings' },
   ];
 
