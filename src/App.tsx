@@ -7,7 +7,7 @@ import './index.css';
 
 function App() {
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
-  const userRole = 'mentor';
+  const userRole = 'mentee';
   const user = {
     name: 'John Doe',
     avatar: undefined

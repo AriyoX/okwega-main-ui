@@ -1,4 +1,4 @@
-import { Bell, Search, Menu } from 'lucide-react';
+import { Bell, Search, Menu, Compass } from 'lucide-react';
 import { useState } from 'react';
 
 interface User {
@@ -27,8 +27,9 @@ export function Header({ user, onMenuClick }: HeaderProps) {
         </button>
 
         {/* Logo */}
-        <div className="lg:w-64 flex items-center">
-          <h1 className="text-xl font-bold text-gray-900">Okwega</h1>
+        <div className="lg:w-64 flex items-center space-x-2 ml-2.5">
+        <Compass className="h-8 w-8 text-blue-600" />
+        <span className="text-2xl font-bold text-blue-900">Okwega</span>
         </div>
 
         {/* Search and Actions Container */}
