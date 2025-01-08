@@ -1,3 +1,4 @@
+import { useState } from 'react';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import { MentorDashboard } from './pages/MentorDashboard';
 import { MenteeDashboard } from './pages/MenteeDashboard';
@@ -5,7 +6,8 @@ import { Header } from './components/Header';
 import './index.css';
 
 function App() {
-  const userRole = 'mentee';
+  const [isSidebarOpen, setIsSidebarOpen] = useState(false);
+  const userRole = 'mentor';
   const user = {
     name: 'John Doe',
     avatar: undefined
@@ -18,8 +20,21 @@ function App() {
           path="/" 
           element={
             <>
-              <Header user={user} />
-              {userRole === 'mentor' ? <MentorDashboard /> : <MenteeDashboard />}
+              <Header 
+                user={user} 
+                onMenuClick={() => setIsSidebarOpen(true)} 
+              />
+              {userRole === 'mentor' ? (
+                <MentorDashboard 
+                  sidebarOpen={isSidebarOpen}
+                  onSidebarClose={() => setIsSidebarOpen(false)}
+                />
+              ) : (
+                <MenteeDashboard 
+                  sidebarOpen={isSidebarOpen}
+                  onSidebarClose={() => setIsSidebarOpen(false)}
+                />
+              )}
             </>
           } 
         />

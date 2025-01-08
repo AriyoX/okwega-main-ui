@@ -36,10 +36,24 @@ const mentors = [
   },
 ];
 
-export function MenteeDashboard() {
+interface MenteeDashboardProps {
+  sidebarOpen: boolean;
+  onSidebarClose: () => void;
+}
+
+export function MenteeDashboard({ sidebarOpen, onSidebarClose }: MenteeDashboardProps) {
+  const currentUser = {
+    id: '1',
+    name: 'John Doe',
+    email: 'john@example.com',
+    avatar: undefined };
+
   return (
     <div className="flex flex-col lg:flex-row min-h-screen bg-gray-50 pt-16">
-      <Sidebar role="mentee" />
+      <Sidebar role="mentee" 
+        user={currentUser} 
+        isOpen={sidebarOpen} 
+        onClose={onSidebarClose}/>
 
       <main className="flex-1 p-4 lg:p-8">
         <div className="max-w-7xl mx-auto">
