@@ -1,5 +1,5 @@
 import React from 'react';
-import { Home, Calendar, List, Users, MessageSquare, Folder, Settings, BookOpen, BarChart2, X } from 'lucide-react';
+import { Home, Calendar, List, Users, MessageSquare, Folder, Settings, BookOpen, BarChart2, X, CreditCard } from 'lucide-react';
 import { Link, useLocation } from 'react-router-dom';
 
 interface NavItem {
@@ -33,16 +33,19 @@ export function Sidebar({ role, user, isOpen, onClose }: SidebarProps) {
     { icon: MessageSquare, label: 'Messages', path: '/messages' },
     { icon: Folder, label: 'Resources', path: '/resources' },
     { icon: BarChart2, label: 'Analytics', path: '/analytics' },
+    { icon: CreditCard, label: 'Payments', path: '/payments' },
     { icon: Settings, label: 'Settings', path: '/settings' },
   ];
 
   const menteeNavItems: NavItem[] = [
     { icon: Home, label: 'Overview', path: '/dashboard' },
     { icon: Users, label: 'Find Mentors', path: '/mentors' },
-    { icon: Calendar, label: 'My Sessions', path: '/sessions' },
+    { icon: List, label: 'My Sessions', path: '/sessions' },
+    { icon: Calendar, label: 'Calendar', path: '/calendar' },
     { icon: BookOpen, label: 'Learning Path', path: '/learning-path' },
     { icon: MessageSquare, label: 'Messages', path: '/messages' },
     { icon: Folder, label: 'Resources', path: '/resources' },
+    { icon: CreditCard, label: 'Payments', path: '/payments' },
     { icon: Settings, label: 'Settings', path: '/settings' },
   ];
 
