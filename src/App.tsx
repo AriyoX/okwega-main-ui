@@ -5,7 +5,7 @@ import './index.css'; // Add this import
 
 function App() {
   // In a real app, this would be determined by authentication
-  const userRole = 'mentee'; // or 'mentee'
+  const userRole = 'mentor'; // or 'mentee'
 
   return (
     <Router>
