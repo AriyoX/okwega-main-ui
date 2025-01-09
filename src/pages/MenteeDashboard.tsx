@@ -1,5 +1,4 @@
 import { BookOpen, Clock, Calendar, Star } from 'lucide-react';
-import { Sidebar } from '../components/Sidebar';
 
 const learningPaths = [
   {
@@ -9,13 +8,13 @@ const learningPaths = [
   },
   {
     id: '2',
-    name: 'Frontend Development Path',
-    progress: 70,
+    name: 'Backend Development Path',
+    progress: 35,
   },
   {
     id: '3',
-    name: 'Frontend Development Path',
-    progress: 70,
+    name: 'Cloud Computing Fundamentals',
+    progress: 15,
   },
 ];
 
@@ -25,127 +24,149 @@ const mentors = [
     name: 'Sarah Wilson',
     role: 'Senior Software Engineer at Google',
     nextSession: 'Friday, 3:00 PM',
-    avatar: 'https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80',
+    avatar: 'https://api.dicebear.com/7.x/avataaars/svg?seed=Sarah',
   },
   {
     id: '2',
-    name: 'Sarah Wilson',
-    role: 'Senior Software Engineer at Google',
-    nextSession: 'Friday, 3:00 PM',
-    avatar: 'https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80',
+    name: 'John Doe',
+    role: 'Lead Developer at Microsoft',
+    nextSession: 'Monday, 10:00 AM',
+    avatar: 'https://api.dicebear.com/7.x/avataaars/svg?seed=John',
   },
 ];
 
-interface MenteeDashboardProps {
-  sidebarOpen: boolean;
-  onSidebarClose: () => void;
-}
-
-export function MenteeDashboard({ sidebarOpen, onSidebarClose }: MenteeDashboardProps) {
-  const currentUser = {
-    id: '1',
-    name: 'John Doe',
-    email: 'john@example.com',
-    avatar: undefined };
-
+export function MenteeDashboard() {
   return (
-    <div className="flex flex-col lg:flex-row min-h-screen bg-gray-50 pt-16">
-      <Sidebar role="mentee" 
-        user={currentUser} 
-        isOpen={sidebarOpen} 
-        onClose={onSidebarClose}/>
+    <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6">
+      {/* Dashboard Header */}
+      <div className="mb-8">
+        <h1 className="text-3xl font-bold text-gray-900">Welcome Back!</h1>
+        <p className="text-gray-500">Here's a summary of your progress and upcoming sessions.</p>
+      </div>
 
-      <main className="flex-1 p-4 lg:p-8">
-        <div className="max-w-7xl mx-auto">
-          <div className="flex items-center justify-between mb-8">
-            <h1 className="text-2xl font-semibold">Overview</h1>
-          </div>
-
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 lg:gap-6 mb-8">
-            <div className="bg-white p-6 rounded-lg">
-              <div className="flex items-center">
-                <BookOpen className="w-8 h-8 text-blue-600" />
-                <div className="ml-4">
-                  <p className="text-sm text-gray-600">Sessions Completed</p>
-                  <p className="text-2xl font-semibold">8</p>
-                </div>
+      {/* Quick Stats */}
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 lg:gap-6 mb-8">
+        <div className="bg-white shadow rounded-lg overflow-hidden">
+          <div className="px-6 py-4">
+            <div className="flex items-center">
+              <div className="p-3 bg-blue-100 text-blue-500 rounded-md">
+                <BookOpen className="w-5 h-5" />
               </div>
-            </div>
-
-            <div className="bg-white p-6 rounded-lg">
-              <div className="flex items-center">
-                <Star className="w-8 h-8 text-blue-600" />
-                <div className="ml-4">
-                  <p className="text-sm text-gray-600">Learning Paths</p>
-                  <p className="text-2xl font-semibold">2</p>
-                </div>
-              </div>
-            </div>
-
-            <div className="bg-white p-6 rounded-lg">
-              <div className="flex items-center">
-                <Clock className="w-8 h-8 text-blue-600" />
-                <div className="ml-4">
-                  <p className="text-sm text-gray-600">Hours Learning</p>
-                  <p className="text-2xl font-semibold">24</p>
-                </div>
-              </div>
-            </div>
-
-            <div className="bg-white p-6 rounded-lg">
-              <div className="flex items-center">
-                <Calendar className="w-8 h-8 text-blue-600" />
-                <div className="ml-4">
-                  <p className="text-sm text-gray-600">Next Session</p>
-                  <p className="text-2xl font-semibold">Tomorrow</p>
-                </div>
-              </div>
-            </div>
-          </div>
-
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 lg:gap-6">
-            <div className="bg-white rounded-lg p-6">
-              <h2 className="text-lg font-medium mb-4">My Mentors</h2>
-              <div className="space-y-4">
-                {mentors.map((mentor) => (
-                  <div key={mentor.id} className="flex items-center space-x-4">
-                    <img
-                      src={mentor.avatar}
-                      alt={mentor.name}
-                      className="w-12 h-12 rounded-full"
-                    />
-                    <div>
-                      <h3 className="font-medium">{mentor.name}</h3>
-                      <p className="text-sm text-gray-500">{mentor.role}</p>
-                      <p className="text-sm text-green-600">Next Session: {mentor.nextSession}</p>
-                    </div>
-                  </div>
-                ))}
-              </div>
-            </div>
-
-            <div className="bg-white rounded-lg p-6">
-              <h2 className="text-lg font-medium mb-4">Learning Progress</h2>
-              <div className="space-y-6">
-                {learningPaths.map((path) => (
-                  <div key={path.id}>
-                    <div className="flex justify-between mb-2">
-                      <span className="text-sm font-medium">{path.name}</span>
-                      <span className="text-sm text-gray-500">{path.progress}% Complete</span>
-                    </div>
-                    <div className="w-full bg-gray-200 rounded-full h-2">
-                      <div
-                        className="bg-blue-600 h-2 rounded-full"
-                        style={{ width: `${path.progress}%` }}
-                      />
-                    </div>
-                  </div>
-                ))}
+              <div className="ml-5 w-0 flex-1">
+                <dt className="text-sm font-medium text-gray-500 truncate">Sessions Completed</dt>
+                <dd className="flex items-baseline">
+                  <div className="text-2xl font-semibold text-gray-900">8</div>
+                </dd>
               </div>
             </div>
           </div>
         </div>
-      </main>
+
+        <div className="bg-white shadow rounded-lg overflow-hidden">
+          <div className="px-6 py-4">
+            <div className="flex items-center">
+              <div className="p-3 bg-indigo-100 text-indigo-500 rounded-md">
+                <Star className="w-5 h-5" />
+              </div>
+              <div className="ml-5 w-0 flex-1">
+                <dt className="text-sm font-medium text-gray-500 truncate">Learning Paths</dt>
+                <dd className="flex items-baseline">
+                  <div className="text-2xl font-semibold text-gray-900">3</div>
+                </dd>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div className="bg-white shadow rounded-lg overflow-hidden">
+          <div className="px-6 py-4">
+            <div className="flex items-center">
+              <div className="p-3 bg-green-100 text-green-500 rounded-md">
+                <Clock className="w-5 h-5" />
+              </div>
+              <div className="ml-5 w-0 flex-1">
+                <dt className="text-sm font-medium text-gray-500 truncate">Hours Learned</dt>
+                <dd className="flex items-baseline">
+                  <div className="text-2xl font-semibold text-gray-900">24</div>
+                </dd>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div className="bg-white shadow rounded-lg overflow-hidden">
+          <div className="px-6 py-4">
+            <div className="flex items-center">
+              <div className="p-3 bg-yellow-100 text-yellow-500 rounded-md">
+                <Calendar className="w-5 h-5" />
+              </div>
+              <div className="ml-5 w-0 flex-1">
+                <dt className="text-sm font-medium text-gray-500 truncate">Next Session</dt>
+                <dd className="flex items-baseline">
+                  <div className="text-2xl font-semibold text-gray-900">Tomorrow</div>
+                </dd>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      {/* Main Content */}
+      <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+        {/* My Mentors Section */}
+        <div className="bg-white shadow rounded-lg">
+          <div className="px-6 py-5 border-b border-gray-200">
+            <h2 className="text-lg font-medium leading-6 text-gray-900">My Mentors</h2>
+          </div>
+          <div className="px-6 py-4 divide-y divide-gray-200">
+            {mentors.map((mentor) => (
+              <div key={mentor.id} className="py-4 flex items-center space-x-3">
+                <img
+                  src={mentor.avatar}
+                  alt={mentor.name}
+                  className="w-10 h-10 rounded-full"
+                />
+                <div className="flex-1 min-w-0">
+                  <h3 className="text-sm font-medium text-gray-900">{mentor.name}</h3>
+                  <p className="text-gray-500 text-sm truncate">{mentor.role}</p>
+                  <p className="text-green-600 text-sm">Next Session: {mentor.nextSession}</p>
+                </div>
+                <div>
+                  <button
+                    type="button"
+                    className="inline-flex items-center rounded-md border border-gray-300 bg-white px-3 py-2 text-sm font-medium text-gray-700 shadow-sm hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
+                  >
+                    Contact
+                  </button>
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+
+        {/* Learning Progress Section */}
+        <div className="bg-white shadow rounded-lg">
+          <div className="px-6 py-5 border-b border-gray-200">
+            <h2 className="text-lg font-medium leading-6 text-gray-900">Learning Progress</h2>
+          </div>
+          <div className="px-6 py-4 space-y-6">
+            {learningPaths.map((path) => (
+              <div key={path.id}>
+                <div className="flex justify-between items-center mb-1">
+                  <span className="text-sm font-medium text-gray-900">{path.name}</span>
+                  <span className="text-sm text-gray-500">{path.progress}%</span>
+                </div>
+                <div className="bg-gray-100 rounded-full h-2 relative overflow-hidden">
+                  <div
+                    className="bg-blue-500 h-full rounded-full absolute left-0 top-0"
+                    style={{ width: `${path.progress}%` }}
+                  ></div>
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+      </div>
     </div>
   );
 }

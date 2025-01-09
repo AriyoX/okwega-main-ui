@@ -1,5 +1,4 @@
-import { Users, BookOpen, Clock, Calendar } from 'lucide-react';
-import { Sidebar } from '../components/Sidebar';
+import { Users, BookOpen, Clock, Calendar, MessageSquare } from 'lucide-react';
 
 const upcomingSessions = [
   {
@@ -10,15 +9,15 @@ const upcomingSessions = [
   },
   {
     id: '2',
-    mentee: 'John Doe',
-    topic: 'Career Development Session',
-    time: 'Today, 2:00 PM',
+    mentee: 'Alice Smith',
+    topic: 'Frontend Mentoring',
+    time: 'Tomorrow, 10:00 AM',
   },
   {
     id: '3',
-    mentee: 'John Doe',
-    topic: 'Career Development Session',
-    time: 'Today, 2:00 PM',
+    mentee: 'Bob Johnson',
+    topic: 'Code Review',
+    time: 'Friday, 3:00 PM',
   },
 ];
 
@@ -27,132 +26,166 @@ const recentMessages = [
     id: '1',
     user: {
       name: 'John Doe',
-      avatar: 'https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80',
+      avatar: 'https://api.dicebear.com/7.x/ лица/svg?seed=JohnDoe',
     },
     message: 'Question about next session...',
   },
   {
     id: '2',
     user: {
-      name: 'John Doe',
-      avatar: 'https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80',
+      name: 'Alice Smith',
+      avatar: 'https://api.dicebear.com/7.x/ лица/svg?seed=AliceSmith',
     },
-    message: 'Question about next session...',
+    message: 'Thank you for the last session!',
   },
   {
     id: '3',
     user: {
-      name: 'John Doe',
-      avatar: 'https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80',
+      name: 'Bob Johnson',
+      avatar: 'https://api.dicebear.com/7.x/ лица/svg?seed=BobJohnson',
     },
-    message: 'Question about next session...',
+    message: 'Need help with a coding problem.',
   },
 ];
 
-interface MentorDashboardProps {
-  sidebarOpen: boolean;
-  onSidebarClose: () => void;
-}
-
-export function MentorDashboard({ sidebarOpen, onSidebarClose }: MentorDashboardProps) {
-  const currentUser = {
-    id: '1',
-    name: 'John Doe',
-    email: 'john@example.com',
-    avatar: undefined};
-
+export function MentorDashboard() {
   return (
-    <div className="flex flex-col lg:flex-row min-h-screen bg-gray-50 pt-16">
-      <Sidebar role="mentor" 
-        user={currentUser} 
-        isOpen={sidebarOpen} 
-        onClose={onSidebarClose} />
-      
-      <main className="flex-1 p-4 lg:p-8">
-        <div className="max-w-7xl mx-auto">
-          <div className="flex items-center justify-between mb-8">
-            <h1 className="text-2xl font-semibold">Dashboard</h1>
-          </div>
+    <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 space-y-8">
+      {/* Dashboard Header */}
+      <div className="mb-4">
+        <h1 className="text-3xl font-bold text-gray-900">Mentor Dashboard</h1>
+        <p className="text-gray-500">Here's an overview of your mentoring activities.</p>
+      </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 lg:gap-6 mb-8">
-            <div className="bg-white p-6 rounded-lg">
-              <div className="flex items-center">
-                <Users className="w-8 h-8 text-blue-600" />
-                <div className="ml-4">
-                  <p className="text-sm text-gray-600">Active Mentees</p>
-                  <p className="text-2xl font-semibold">12</p>
-                </div>
+      {/* Quick Stats */}
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+        <div className="bg-white shadow rounded-lg overflow-hidden">
+          <div className="px-6 py-4">
+            <div className="flex items-center">
+              <div className="p-3 bg-indigo-100 text-indigo-500 rounded-md">
+                <Users className="w-6 h-6" />
               </div>
-            </div>
-
-            <div className="bg-white p-6 rounded-lg">
-              <div className="flex items-center">
-                <BookOpen className="w-8 h-8 text-blue-600" />
-                <div className="ml-4">
-                  <p className="text-sm text-gray-600">Completed Sessions</p>
-                  <p className="text-2xl font-semibold">48</p>
-                </div>
-              </div>
-            </div>
-
-            <div className="bg-white p-6 rounded-lg">
-              <div className="flex items-center">
-                <Clock className="w-8 h-8 text-blue-600" />
-                <div className="ml-4">
-                  <p className="text-sm text-gray-600">Hours Mentored</p>
-                  <p className="text-2xl font-semibold">96</p>
-                </div>
-              </div>
-            </div>
-
-            <div className="bg-white p-6 rounded-lg">
-              <div className="flex items-center">
-                <Calendar className="w-8 h-8 text-blue-600" />
-                <div className="ml-4">
-                  <p className="text-sm text-gray-600">Total Earnings</p>
-                  <p className="text-2xl font-semibold">$2,400</p>
-                </div>
-              </div>
-            </div>
-          </div>
-
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 lg:gap-6">
-            <div className="bg-white rounded-lg p-6">
-              <h2 className="text-lg font-medium mb-4">Upcoming Sessions</h2>
-              <div className="space-y-4">
-                {upcomingSessions.map((session) => (
-                  <div key={session.id} className="flex items-center justify-between p-4 bg-gray-50 rounded-lg">
-                    <div>
-                      <h3 className="font-medium">{session.topic}</h3>
-                      <p className="text-sm text-gray-500">with {session.mentee}</p>
-                    </div>
-                    <div className="text-sm text-gray-500">{session.time}</div>
-                  </div>
-                ))}
-              </div>
-            </div>
-
-            <div className="bg-white rounded-lg p-6">
-              <h2 className="text-lg font-medium mb-4">Recent Messages</h2>
-              <div className="space-y-4">
-                {recentMessages.map((message) => (
-                  <div key={message.id} className="flex items-center space-x-4">
-                    <img
-                      src={message.user.avatar}
-                      alt={message.user.name}
-                      className="w-10 h-10 rounded-full"
-                    />
-                    <div>
-                      <h3 className="font-medium">{message.user.name}</h3>
-                      <p className="text-sm text-gray-500">{message.message}</p>
-                    </div>
-                  </div>
-                ))}
+              <div className="ml-5">
+                <dt className="text-sm font-medium text-gray-500 truncate">Active Mentees</dt>
+                <dd className="mt-1 text-3xl font-semibold text-gray-900">12</dd>
               </div>
             </div>
           </div>
         </div>
-      </main>
+        <div className="bg-white shadow rounded-lg overflow-hidden">
+          <div className="px-6 py-4">
+            <div className="flex items-center">
+              <div className="p-3 bg-green-100 text-green-500 rounded-md">
+                <BookOpen className="w-6 h-6" />
+              </div>
+              <div className="ml-5">
+                <dt className="text-sm font-medium text-gray-500 truncate">Completed Sessions</dt>
+                <dd className="mt-1 text-3xl font-semibold text-gray-900">48</dd>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div className="bg-white shadow rounded-lg overflow-hidden">
+          <div className="px-6 py-4">
+            <div className="flex items-center">
+              <div className="p-3 bg-blue-100 text-blue-500 rounded-md">
+                <Clock className="w-6 h-6" />
+              </div>
+              <div className="ml-5">
+                <dt className="text-sm font-medium text-gray-500 truncate">Hours Mentored</dt>
+                <dd className="mt-1 text-3xl font-semibold text-gray-900">96</dd>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div className="bg-white shadow rounded-lg overflow-hidden">
+          <div className="px-6 py-4">
+            <div className="flex items-center">
+              <div className="p-3 bg-yellow-100 text-yellow-500 rounded-md">
+                <Calendar className="w-6 h-6" />
+              </div>
+              <div className="ml-5">
+                <dt className="text-sm font-medium text-gray-500 truncate">Total Earnings</dt>
+                <dd className="mt-1 text-3xl font-semibold text-gray-900">$2,400</dd>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      {/* Main Content */}
+      <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+        {/* Upcoming Sessions */}
+        <div className="bg-white shadow rounded-lg">
+          <div className="px-6 py-5 border-b border-gray-200">
+            <h2 className="text-lg font-semibold text-gray-900">Upcoming Sessions</h2>
+          </div>
+          <div className="divide-y divide-gray-200">
+            {upcomingSessions.map((session) => (
+              <div key={session.id} className="px-6 py-4 hover:bg-gray-50">
+                <div className="flex justify-between items-center">
+                  <div>
+                    <h3 className="text-base font-medium text-gray-900">{session.topic}</h3>
+                    <p className="text-sm text-gray-500">With {session.mentee}</p>
+                  </div>
+                  <div className="text-sm text-gray-700">{session.time}</div>
+                </div>
+              </div>
+            ))}
+            {upcomingSessions.length === 0 && (
+              <div className="px-6 py-4 text-center text-gray-500">
+                No upcoming sessions.
+              </div>
+            )}
+          </div>
+          {upcomingSessions.length > 0 && (
+            <div className="px-6 py-3 bg-gray-50 text-center">
+              <a href="#" className="text-sm font-medium text-blue-600 hover:text-blue-800">
+                View all sessions
+              </a>
+            </div>
+          )}
+        </div>
+
+        {/* Recent Messages */}
+        <div className="bg-white shadow rounded-lg">
+          <div className="px-6 py-5 border-b border-gray-200">
+            <div className="flex items-center justify-between">
+              <h2 className="text-lg font-semibold text-gray-900">Recent Messages</h2>
+              <a href="#" className="text-sm font-medium text-blue-600 hover:text-blue-800">
+                View all
+              </a>
+            </div>
+          </div>
+          <div className="divide-y divide-gray-200">
+            {recentMessages.map((message) => (
+              <div key={message.id} className="px-6 py-4 hover:bg-gray-50">
+                <div className="flex items-start space-x-3">
+                  <div className="flex-shrink-0">
+                    <img
+                      className="h-10 w-10 rounded-full"
+                      src={message.user.avatar}
+                      alt={message.user.name}
+                    />
+                  </div>
+                  <div className="min-w-0 flex-1">
+                    <p className="text-sm font-medium text-gray-900">{message.user.name}</p>
+                    <p className="text-sm text-gray-500 truncate">{message.message}</p>
+                  </div>
+                  <div className="ml-2 text-gray-400">
+                    <MessageSquare className="w-4 h-4" />
+                  </div>
+                </div>
+              </div>
+            ))}
+            {recentMessages.length === 0 && (
+              <div className="px-6 py-4 text-center text-gray-500">
+                No recent messages.
+              </div>
+            )}
+          </div>
+        </div>
+      </div>
     </div>
   );
 }

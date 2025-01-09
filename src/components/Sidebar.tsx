@@ -26,7 +26,7 @@ export function Sidebar({ role, user, isOpen, onClose }: SidebarProps) {
   const location = useLocation();
   
   const mentorNavItems: NavItem[] = [
-    { icon: Home, label: 'Dashboard', path: '/dashboard' },
+    { icon: Home, label: 'Dashboard', path: '/' },
     { icon: Users, label: 'Mentees', path: '/mentees' },
     { icon: List, label: 'Sessions', path: '/sessions' },
     { icon: Calendar, label: 'Calendar', path: '/calendar' },
@@ -38,7 +38,7 @@ export function Sidebar({ role, user, isOpen, onClose }: SidebarProps) {
   ];
 
   const menteeNavItems: NavItem[] = [
-    { icon: Home, label: 'Overview', path: '/dashboard' },
+    { icon: Home, label: 'Overview', path: '/' },
     { icon: Users, label: 'Find Mentors', path: '/mentors' },
     { icon: List, label: 'My Sessions', path: '/sessions' },
     { icon: Calendar, label: 'Calendar', path: '/calendar' },
