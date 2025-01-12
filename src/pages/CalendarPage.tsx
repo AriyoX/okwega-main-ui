@@ -14,12 +14,6 @@ import {
 } from '@/components/ui/select';
 import Button from '@/components/ui/button';
 import Card from '@/components/ui/card';
-import {
-  Tooltip,
-  TooltipContent,
-  TooltipProvider,
-  TooltipTrigger,
-} from '@/components/ui/tooltip';
 import { VideoPreviewModal } from '@/components/VideoPreviewModal';
 import { QuizModal } from '@/components/QuizModal';
 import { QuizReviewModal } from '@/components/QuizReviewModal';
@@ -139,21 +133,21 @@ export function CalendarPage() {
           <PopoverTrigger asChild>
             <div
               className={`
-                relative p-2 min-h-[80px] border border-gray-200 cursor-pointer
-                hover:bg-gray-50 transition-colors
+                relative p-2 min-h-[80px] border border-gray-200 rounded-md cursor-pointer
+                hover:bg-gray-100 transition-colors
                 ${isToday ? 'bg-blue-50' : ''}
                 ${isSelected ? 'border-blue-500' : ''}
               `}
               onClick={() => setSelectedDate(dateString)}
             >
               <span className={`
-                text-sm ${isToday ? 'font-bold text-blue-600' : ''}
+                text-sm font-medium ${isToday ? 'text-blue-600' : 'text-gray-800'}
               `}>
                 {day}
               </span>
 
               {sessions.length > 0 && (
-                <div className="absolute bottom-2 left-2 flex gap-1">
+                <div className="absolute bottom-1 left-1 flex gap-1">
                   {sessions.map((session, index) => (
                     <SessionBadge key={index} type={session.type} />
                   ))}
@@ -163,23 +157,21 @@ export function CalendarPage() {
           </PopoverTrigger>
 
           {sessions.length > 0 && (
-            <PopoverContent className="w-80 p-0">
-              <div className="p-4 space-y-3">
+            <PopoverContent className="w-80 p-2">
+              <div className="space-y-2">
                 {sessions.map((session) => (
-                  <div key={session.id} className="flex items-start gap-3 p-2 hover:bg-gray-50 rounded-lg">
+                  <div key={session.id} className="flex items-center gap-2 p-2 hover:bg-gray-100 rounded-md">
                     {session.type === 'video' ? (
-                      <Video className="h-4 w-4 mt-1 text-blue-500" />
+                      <Video className="h-4 w-4 text-blue-500" />
                     ) : (
-                      <MessageSquare className="h-4 w-4 mt-1 text-green-500" />
+                      <MessageSquare className="h-4 w-4 text-green-500" />
                     )}
                     <div>
-                      <p className="font-medium">{session.topics[0]}
-                        {/* make array */}
+                      <p className="font-medium text-sm">{session.topics[0]}</p>
+                      <p className="text-xs text-gray-500">
+                        {new Date(session.dateTime).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })} · {session.duration} mins
                       </p>
-                      <p className="text-sm text-gray-600">
-                        {new Date(session.dateTime).toLocaleTimeString()} · {session.duration} mins
-                      </p>
-                      <p className="text-sm text-gray-600">
+                      <p className="text-xs text-gray-500">
                         with {session.mentorName}
                       </p>
                     </div>
@@ -196,19 +188,19 @@ export function CalendarPage() {
   };
 
   return (
-    <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 space-y-6">
+    <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10 space-y-8">
       {/* Header */}
-      <div className="flex justify-between items-center">
+      <div className="flex justify-between items-center mb-4">
         <div>
-          <h1 className="text-3xl font-bold text-gray-900">Calendar</h1>
-          <p className="mt-2 text-gray-600">
+          <h1 className="text-2xl font-semibold text-gray-900">Calendar</h1>
+          <p className="mt-1 text-sm text-gray-500">
             View and manage your upcoming mentoring sessions
           </p>
         </div>
 
-        <div className="flex items-center gap-4">
+        <div className="flex items-center gap-3">
           <Select value={sessionTypeFilter} onValueChange={setSessionTypeFilter}>
-            <SelectTrigger className="w-[180px]">
+            <SelectTrigger className="w-[180px] text-sm">
               <SelectValue placeholder="Filter by type" />
             </SelectTrigger>
             <SelectContent>
@@ -218,37 +210,35 @@ export function CalendarPage() {
             </SelectContent>
           </Select>
 
-          <TooltipProvider>
-            <Tooltip>
-              <TooltipTrigger asChild>
-                <Button variant="outline" size="icon">
-                  <Info className="h-4 w-4" />
-                </Button>
-              </TooltipTrigger>
-              <TooltipContent>
-                <div className="space-y-2">
-                  <div className="flex items-center gap-2">
-                    <div className="w-2 h-2 rounded-full bg-blue-500" />
-                    <span>Video Sessions</span>
-                  </div>
-                  <div className="flex items-center gap-2">
-                    <div className="w-2 h-2 rounded-full bg-green-500" />
-                    <span>Quizzes</span>
-                  </div>
+          <Popover>
+            <PopoverTrigger asChild>
+              <Button variant="outline" size="icon">
+                <Info className="h-4 w-4" />
+              </Button>
+            </PopoverTrigger>
+            <PopoverContent className="w-60 p-4">
+              <div className="space-y-2">
+                <div className="flex items-center gap-2">
+                  <div className="w-3 h-3 rounded-full bg-blue-500" />
+                  <span className="text-sm text-gray-700">Video Sessions</span>
                 </div>
-              </TooltipContent>
-            </Tooltip>
-          </TooltipProvider>
+                <div className="flex items-center gap-2">
+                  <div className="w-3 h-3 rounded-full bg-green-500" />
+                  <span className="text-sm text-gray-700">Quizzes</span>
+                </div>
+              </div>
+            </PopoverContent>
+          </Popover>
         </div>
       </div>
 
       {/* Calendar Navigation */}
       <div className="flex justify-between items-center">
-        <div className="flex items-center gap-2">
+        <div className="flex items-center gap-1">
           <Button variant="outline" size="icon" onClick={handlePrevMonth}>
             <ChevronLeft className="h-4 w-4" />
           </Button>
-          <h2 className="text-lg font-semibold">
+          <h2 className="text-base font-semibold text-gray-800">
             {currentDate.toLocaleString('default', { month: 'long', year: 'numeric' })}
           </h2>
           <Button variant="outline" size="icon" onClick={handleNextMonth}>
@@ -258,7 +248,7 @@ export function CalendarPage() {
 
         <Button
           variant="outline"
-          className="flex items-center gap-2"
+          className="text-sm flex items-center gap-2"
           onClick={() => setCurrentDate(new Date())}
         >
           <CalendarIcon className="h-4 w-4" />
@@ -267,78 +257,89 @@ export function CalendarPage() {
       </div>
 
       {/* Calendar Grid */}
-      <Card className="p-4">
+      <Card className="p-3 shadow-sm">
         {/* Week day headers */}
-        <div className="grid grid-cols-7 gap-px mb-2">
+        <div className="grid grid-cols-7 gap-px mb-1">
           {['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'].map((day) => (
-            <div key={day} className="p-2 text-center font-medium text-gray-600">
+            <div key={day} className="p-1 text-center text-xs font-medium text-gray-500">
               {day}
             </div>
           ))}
         </div>
 
         {/* Calendar days */}
-        <div className="grid grid-cols-7 gap-px bg-gray-200">
+        <div className="grid grid-cols-7 gap-px bg-gray-100 rounded-md">
           {renderCalendarDays()}
         </div>
       </Card>
 
       {/* Selected Date Details */}
       {selectedDate && (
-        <Card className="p-6">
-          <h3 className="text-lg font-semibold mb-4">
+        <Card className="p-4 shadow-sm">
+          <h3 className="text-lg font-semibold mb-3 text-gray-800">
             Sessions on {new Date(selectedDate).toLocaleDateString()}
           </h3>
-          <div className="space-y-4">
+          <div className="space-y-3">
             {getSessionsForDate(
               new Date(selectedDate).getFullYear(),
               new Date(selectedDate).getMonth(),
               new Date(selectedDate).getDate()
             ).map((session) => (
-              <div key={session.id} className="flex items-start gap-4 p-4 hover:bg-gray-50 rounded-lg">
-                {session.type === 'video' ? (
-                  <Video className="h-5 w-5 mt-1 text-blue-500" />
-                ) : (
-                  <MessageSquare className="h-5 w-5 mt-1 text-green-500" />
-                )}
-                <div>
-                  <h4 className="font-medium">{session.topics[0]}</h4>
-                  <p className="text-gray-600">
-                    {new Date(session.dateTime).toLocaleTimeString()} · {session.duration} mins · with {session.mentorName}
-                  </p>
+              <div key={session.id} className="flex items-center justify-between p-3 hover:bg-gray-50 rounded-md">
+                <div className="flex items-center gap-3">
+                  {session.type === 'video' ? (
+                    <Video className="h-4 w-4 text-blue-500" />
+                  ) : (
+                    <MessageSquare className="h-4 w-4 text-green-500" />
+                  )}
+                  <div>
+                    <h4 className="font-medium text-sm text-gray-800">{session.topics[0]}</h4>
+                    <p className="text-gray-500 text-xs">
+                      {new Date(session.dateTime).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })} · {session.duration} mins · with {session.mentorName}
+                    </p>
+                  </div>
                 </div>
-                {session.status === 'scheduled' && (
-                  <Button className="ml-auto"
-                    onClick={() => {
-                      setSelectedSession(session);
-                      if (session.type === 'video') {
-                        setVideoModalOpen(true);
-                      } else if (session.type === 'quiz') {
-                        setQuizModalOpen(true);
-                      }
-                    }}
-                  >
-                    {session.type === 'video' ? 'Join Session' : 'Start Quiz'}
-                  </Button>
-                )}
-                {session.status === 'completed' && session.type === 'video' && (
-                  <Button className="ml-auto" variant="outline" onClick={() => {
-                    setSelectedNotes(session.notes);
-                    setIsNotesModalOpen(true);
-                  }}>
-                    View Notes
-                  </Button>
-                )}
-                {session.status === 'completed' && session.type === 'quiz' && session.quizDetails && (
-                  <Button className="ml-auto" variant="outline" onClick={() => {
-                    setSelectedQuiz(session.quizDetails);
-                    setIsQuizReviewModalOpen(true);
-                  }}>
-                    Review Quiz
-                  </Button>
-                )}
+                <div className="flex gap-2">
+                  {session.status === 'scheduled' && (
+                    <Button size="sm"
+                      onClick={() => {
+                        setSelectedSession(session);
+                        if (session.type === 'video') {
+                          setVideoModalOpen(true);
+                        } else if (session.type === 'quiz') {
+                          setQuizModalOpen(true);
+                        }
+                      }}
+                    >
+                      {session.type === 'video' ? 'Join' : 'Start'}
+                    </Button>
+                  )}
+                  {session.status === 'completed' && session.type === 'video' && (
+                    <Button size="sm" variant="outline" onClick={() => {
+                      setSelectedNotes(session.notes);
+                      setIsNotesModalOpen(true);
+                    }}>
+                      Notes
+                    </Button>
+                  )}
+                  {session.status === 'completed' && session.type === 'quiz' && session.quizDetails && (
+                    <Button size="sm" variant="outline" onClick={() => {
+                      setSelectedQuiz(session.quizDetails);
+                      setIsQuizReviewModalOpen(true);
+                    }}>
+                      Review
+                    </Button>
+                  )}
+                </div>
               </div>
             ))}
+            {getSessionsForDate(
+              new Date(selectedDate).getFullYear(),
+              new Date(selectedDate).getMonth(),
+              new Date(selectedDate).getDate()
+            ).length === 0 && (
+              <p className="text-sm text-gray-500">No sessions on this day.</p>
+            )}
           </div>
         </Card>
       )}

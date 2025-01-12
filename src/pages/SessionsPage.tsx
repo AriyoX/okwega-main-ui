@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { Calendar, Clock, Search, Star, MessageSquare, Video } from 'lucide-react';
+import { Search, Star, MessageSquare, Video } from 'lucide-react';
 import { Tabs, TabsList, TabsTrigger, TabsContent } from '@/components/ui/tabs';
 import Button from '@/components/ui/button';
 import Card from '@/components/ui/card';
@@ -66,7 +66,7 @@ export function SessionsPage() {
   const [videoModalOpen, setVideoModalOpen] = useState(false);
   const [quizModalOpen, setQuizModalOpen] = useState(false);
   const [selectedSession, setSelectedSession] = useState<Session | null>(null);
-  const itemsPerPage = 5; // You can adjust this value
+  const itemsPerPage = 5;
   const [isQuizReviewModalOpen, setIsQuizReviewModalOpen] = useState(false);
   const [isNotesModalOpen, setIsNotesModalOpen] = useState(false);
   const [selectedQuiz, setSelectedQuiz] = useState<Session['quizDetails'] | null>(null);
@@ -114,125 +114,117 @@ export function SessionsPage() {
   const totalPages = Math.ceil(filteredAndSortedSessions.length / itemsPerPage);
 
   return (
-    <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 space-y-6">
+    <div className="max-w-7xl mx-auto px-6 lg:px-8 py-10 space-y-8">
       {/* Header */}
-      <div>
-        <h1 className="text-3xl font-bold text-gray-900">My Sessions</h1>
-        <p className="mt-2 text-gray-600">
+      <div className="mb-4">
+        <h1 className="text-2xl font-semibold text-gray-900">My Sessions</h1>
+        <p className="mt-1 text-sm text-gray-500">
           Track your mentoring sessions, review past meetings, and prepare for upcoming ones.
         </p>
       </div>
 
       {/* Search and Filters */}
-      <div className="flex flex-col sm:flex-row gap-4">
-        <div className="relative flex-1">
-          <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 h-5 w-5" />
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 mb-6">
+        <div className="relative">
+          <Search className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400 h-4 w-4" />
           <input
             type="text"
-            placeholder="Search sessions by mentor or topic..."
-            className="w-full pl-10 pr-4 py-2 border border-gray-300 rounded-md"
+            placeholder="Search sessions..."
+            className="w-full pl-9 pr-3 py-2 border border-gray-200 rounded-md focus:ring-blue-500 focus:border-blue-500 text-sm"
             value={searchQuery}
             onChange={(e) => setSearchQuery(e.target.value)}
           />
         </div>
-        <div className="flex gap-2">
-          <Select value={filterType} onValueChange={(value) => setFilterType(value as 'all' | 'video' | 'quiz')}>
-            <SelectTrigger className="w-[180px]">
-              <SelectValue placeholder="Filter by type" />
-            </SelectTrigger>
-            <SelectContent>
-              <SelectItem value="all">All Types</SelectItem>
-              <SelectItem value="video">Video Sessions</SelectItem>
-              <SelectItem value="quiz">Quizzes</SelectItem>
-            </SelectContent>
-          </Select>
-
-          <Select value={sortBy} onValueChange={setSortBy}>
-            <SelectTrigger className="w-[180px]">
-              <SelectValue placeholder="Sort by" />
-            </SelectTrigger>
-            <SelectContent>
-              <SelectItem value="date">Sort by Date</SelectItem>
-              <SelectItem value="duration">Sort by Duration</SelectItem>
-              <SelectItem value="rating">Sort by Rating</SelectItem>
-            </SelectContent>
-          </Select>
-        </div>
+        <Select value={filterType} onValueChange={(value) => setFilterType(value as 'all' | 'video' | 'quiz')}>
+          <SelectTrigger className="w-full sm:w-[auto] text-sm">
+            <SelectValue placeholder="Filter by type" />
+          </SelectTrigger>
+          <SelectContent>
+            <SelectItem value="all">All Types</SelectItem>
+            <SelectItem value="video">Video</SelectItem>
+            <SelectItem value="quiz">Quiz</SelectItem>
+          </SelectContent>
+        </Select>
+        <Select value={sortBy} onValueChange={setSortBy}>
+          <SelectTrigger className="w-full sm:w-[auto] text-sm">
+            <SelectValue placeholder="Sort by" />
+          </SelectTrigger>
+          <SelectContent>
+            <SelectItem value="date">Date</SelectItem>
+            <SelectItem value="duration">Duration</SelectItem>
+            <SelectItem value="rating">Rating</SelectItem>
+          </SelectContent>
+        </Select>
       </div>
 
       {/* Tabs and Content */}
       <Tabs value={activeTab} onValueChange={setActiveTab}>
-        <TabsList>
-          <TabsTrigger value="upcoming" className="flex gap-2">
-            <Calendar className="h-4 w-4" />
+        <TabsList className="mb-4">
+          <TabsTrigger value="upcoming" className="text-sm font-medium focus-visible:ring-2 focus-visible:ring-blue-500">
             Upcoming Sessions
           </TabsTrigger>
-          <TabsTrigger value="past" className="flex gap-2">
-            <Clock className="h-4 w-4" />
+          <TabsTrigger value="past" className="text-sm font-medium focus-visible:ring-2 focus-visible:ring-blue-500">
             Past Sessions
           </TabsTrigger>
         </TabsList>
 
-        <TabsContent value="upcoming" className="space-y-4 mt-4">
+        <TabsContent value="upcoming" className="space-y-4">
           {currentSessions.length === 0 && filteredAndSortedSessions.length > 0 ? (
-            <div className="text-center py-8 text-gray-500">
+            <div className="text-center py-6 text-gray-500 text-sm">
               Loading sessions...
             </div>
           ) : currentSessions.length === 0 && filteredAndSortedSessions.length === 0 ? (
-            <div className="text-center py-8 text-gray-500">
+            <div className="text-center py-6 text-gray-500 text-sm">
               No upcoming sessions found.
             </div>
           ) : (
             currentSessions.map(session => (
-              <Card key={session.id} className="p-6">
-                <div className="flex flex-col md:flex-row justify-between gap-4">
-                  <div className="space-y-2">
-                    <h3 className="text-lg font-semibold">{session.mentorName}</h3>
-                    <p className="text-gray-600">{session.mentorRole} at {session.mentorCompany}</p>
-                    <div className="flex items-center gap-2 text-sm">
+              <Card key={session.id} className="border">
+                <div className="flex items-center justify-between p-4">
+                  <div>
+                    <h3 className="text-base font-semibold text-gray-800">{session.mentorName}</h3>
+                    <p className="text-gray-500 text-sm">{session.mentorRole} at {session.mentorCompany}</p>
+                    <div className="flex items-center gap-2 text-xs mt-1">
                       {session.type === 'video' ? (
-                        <Video className="h-4 w-4 text-blue-500" />
+                        <Video className="h-3 w-3 text-blue-500" />
                       ) : (
-                        <MessageSquare className="h-4 w-4 text-green-500" />
+                        <MessageSquare className="h-3 w-3 text-green-500" />
                       )}
                       <span>{new Date(session.dateTime).toLocaleString()}</span>
                       <span>·</span>
                       <span>{session.duration} mins</span>
                     </div>
-                    <div className="flex flex-wrap gap-2">
+                    <div className="flex flex-wrap gap-1 mt-2">
                       {session.topics.map((topic, index) => (
-                        <span key={index} className="px-2 py-1 bg-blue-100 text-blue-800 text-xs rounded-full">
+                        <span key={index} className="px-2 py-0.5 bg-gray-100 text-gray-700 text-xs rounded-full">
                           {topic}
                         </span>
                       ))}
                     </div>
                     {session.type === 'quiz' && session.quizDetails && (
-                      <div className="mt-2 text-sm text-gray-700">
+                      <p className="text-gray-600 text-xs mt-1">
                         Quiz: {session.quizDetails.title} ({session.quizDetails.totalQuestions} questions)
-                      </div>
+                      </p>
                     )}
                   </div>
-                  <div className="flex flex-col sm:flex-row gap-2">
+                  <div className="flex flex-col items-end gap-2">
                     {session.status === 'scheduled' && (
                       <>
-
                         {session.type === 'video' && (
-                          <Button className="flex items-center gap-2"
+                          <Button variant="outline" size="sm"
                             onClick={() => {
                               setSelectedSession(session);
                               setVideoModalOpen(true);
                             }}>
-                            <Video className="h-4 w-4" />
-                            Join Session
+                            Join
                           </Button>
                         )}
                         {session.type === 'quiz' && session.quizDetails && (
-                          <Button className="flex items-center gap-2"
+                          <Button variant="outline" size="sm"
                             onClick={() => {
                               setSelectedSession(session);
                               setQuizModalOpen(true);
                             }}>
-                            <MessageSquare className="h-4 w-4" />
                             Start Quiz
                           </Button>
                         )}
@@ -245,77 +237,77 @@ export function SessionsPage() {
           )}
         </TabsContent>
 
-        <TabsContent value="past" className="space-y-4 mt-4">
+        <TabsContent value="past" className="space-y-4">
           {currentSessions.length === 0 && filteredAndSortedSessions.length > 0 ? (
-            <div className="text-center py-8 text-gray-500">
+            <div className="text-center py-6 text-gray-500 text-sm">
               Loading sessions...
             </div>
           ) : currentSessions.length === 0 && filteredAndSortedSessions.length === 0 ? (
-            <div className="text-center py-8 text-gray-500">
+            <div className="text-center py-6 text-gray-500 text-sm">
               No past sessions found.
             </div>
           ) : (
             currentSessions.map(session => (
-              <Card key={session.id} className="p-6">
-                <div className="flex flex-col md:flex-row justify-between gap-4">
-                  <div className="space-y-2">
-                    <h3 className="text-lg font-semibold">{session.mentorName}</h3>
-                    <p className="text-gray-600">{session.mentorRole} at {session.mentorCompany}</p>
-                    <div className="flex items-center gap-2 text-sm">
+              <Card key={session.id} className="border">
+                <div className="flex items-center justify-between p-4">
+                  <div>
+                    <h3 className="text-base font-semibold text-gray-800">{session.mentorName}</h3>
+                    <p className="text-gray-500 text-sm">{session.mentorRole} at {session.mentorCompany}</p>
+                    <div className="flex items-center gap-2 text-xs mt-1">
                       {session.type === 'video' ? (
-                        <Video className="h-4 w-4 text-blue-500" />
+                        <Video className="h-3 w-3 text-blue-500" />
                       ) : (
-                        <MessageSquare className="h-4 w-4 text-green-500" />
+                        <MessageSquare className="h-3 w-3 text-green-500" />
                       )}
                       <span>{new Date(session.dateTime).toLocaleString()}</span>
                       <span>·</span>
                       <span>{session.duration} mins</span>
                     </div>
                     {session.rating && (
-                      <div className="flex items-center gap-1 text-yellow-500">
-                        <Star className="h-4 w-4 fill-current" />
+                      <div className="flex items-center gap-1 text-yellow-500 text-xs mt-1">
+                        <Star className="h-3 w-3 fill-current" />
                         <span>{session.rating}</span>
                       </div>
                     )}
                     {session.feedback && (
-                      <p className="text-gray-600 text-sm">{session.feedback}</p>
+                      <p className="text-gray-600 text-xs mt-1 line-clamp-1">{session.feedback}</p>
                     )}
-                    <div className="flex flex-wrap gap-2">
+                    <div className="flex flex-wrap gap-1 mt-2">
                       {session.topics.map((topic, index) => (
-                        <span key={index} className="px-2 py-1 bg-blue-100 text-blue-800 text-xs rounded-full">
+                        <span key={index} className="px-2 py-0.5 bg-gray-100 text-gray-700 text-xs rounded-full">
                           {topic}
                         </span>
                       ))}
                     </div>
                     {session.type === 'quiz' && session.quizDetails && (
-                      <div className="mt-2 text-sm text-gray-700">
+                      <p className="text-gray-600 text-xs mt-1">
                         Quiz: {session.quizDetails.title}
                         {session.quizDetails.score !== undefined && (
                           <span> (Score: {session.quizDetails.score}/{session.quizDetails.totalQuestions})</span>
                         )}
-                      </div>
+                      </p>
                     )}
                   </div>
-                  <div className="flex flex-col sm:flex-row gap-2">
+                  <div className="flex flex-col items-end gap-2">
                     {!session.rating && session.type === 'video' && (
-                      <Button variant="outline">
-                        Leave Feedback
+                      <Button variant="outline" size="sm">
+                        Feedback
                       </Button>
                     )}
                     {session.type === 'video' && (
-                      <Button variant="outline" onClick={() => {
+                      <Button variant="outline" size="sm" onClick={() => {
                         setSelectedNotes(session.notes);
                         setIsNotesModalOpen(true);
                       }}>
-                        View Notes
+                        Notes
                       </Button>
                     )}
                     {session.type === 'quiz' && session.quizDetails && (
-                      <Button variant="outline" onClick={() => {
+                      <Button variant="outline" size="sm" onClick={() => {
                         setSelectedQuiz(session.quizDetails);
                         setIsQuizReviewModalOpen(true);
                       }}>
-                        Review Quiz
+                        Review
                       </Button>
                     )}
                   </div>
@@ -328,12 +320,13 @@ export function SessionsPage() {
 
       {/* Pagination */}
       {filteredAndSortedSessions.length > itemsPerPage && (
-        <div className="flex justify-center mt-4">
+        <div className="flex justify-center mt-6">
           <nav role="navigation" aria-label="Pagination Navigation">
             <ul className="flex items-center space-x-2">
               <li>
                 <Button
                   variant="outline"
+                  size="sm"
                   disabled={currentPage === 1}
                   onClick={() => paginate(currentPage - 1)}
                 >
@@ -344,6 +337,7 @@ export function SessionsPage() {
                 <li key={pageNumber}>
                   <Button
                     variant={currentPage === pageNumber ? 'primary' : 'outline'}
+                    size="sm"
                     onClick={() => paginate(pageNumber)}
                   >
                     {pageNumber}
@@ -353,6 +347,7 @@ export function SessionsPage() {
               <li>
                 <Button
                   variant="outline"
+                  size="sm"
                   disabled={currentPage === totalPages}
                   onClick={() => paginate(currentPage + 1)}
                 >
