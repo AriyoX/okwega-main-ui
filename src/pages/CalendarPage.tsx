@@ -20,11 +20,22 @@ import {
   TooltipProvider,
   TooltipTrigger,
 } from '@/components/ui/tooltip';
+import { VideoPreviewModal } from '@/components/VideoPreviewModal';
+import { QuizModal } from '@/components/QuizModal';
+import { QuizReviewModal } from '@/components/QuizReviewModal';
+import { NotesModal } from '@/components/NotesModal';
 
 export function CalendarPage() {
   const [currentDate, setCurrentDate] = useState(new Date());
   const [selectedDate, setSelectedDate] = useState<string | null>(null);
   const [sessionTypeFilter, setSessionTypeFilter] = useState('all');
+  const [videoModalOpen, setVideoModalOpen] = useState(false);
+  const [quizModalOpen, setQuizModalOpen] = useState(false);
+  const [selectedSession, setSelectedSession] = useState<Session | null>(null);
+  const [isQuizReviewModalOpen, setIsQuizReviewModalOpen] = useState(false);
+  const [isNotesModalOpen, setIsNotesModalOpen] = useState(false);
+  const [selectedQuiz, setSelectedQuiz] = useState<Session['quizDetails'] | null>(null);
+  const [selectedNotes, setSelectedNotes] = useState<string | undefined>(undefined);
 
   interface Session {
     id: string;
@@ -48,7 +59,7 @@ export function CalendarPage() {
       duration?: number; // Add duration here
     };
   }
-  
+
   const mockSessions: Session[] = [
     {
       id: '1', mentorId: 1, mentorName: 'Sarah Wilson', mentorRole: 'Senior Software Engineer', mentorCompany: 'Google', type: 'video', status: 'scheduled', dateTime: '2025-01-15T10:00:00', duration: 60, topics: ['React', 'Frontend Architecture'] },
@@ -140,7 +151,7 @@ export function CalendarPage() {
               `}>
                 {day}
               </span>
-              
+
               {sessions.length > 0 && (
                 <div className="absolute bottom-2 left-2 flex gap-1">
                   {sessions.map((session, index) => (
@@ -150,7 +161,7 @@ export function CalendarPage() {
               )}
             </div>
           </PopoverTrigger>
-          
+
           {sessions.length > 0 && (
             <PopoverContent className="w-80 p-0">
               <div className="p-4 space-y-3">
@@ -296,14 +307,61 @@ export function CalendarPage() {
                     {new Date(session.dateTime).toLocaleTimeString()} · {session.duration} mins · with {session.mentorName}
                   </p>
                 </div>
-                <Button className="ml-auto">
-                  {session.type === 'video' ? 'Join Session' : 'Start Quiz'}
-                </Button>
+                {session.status === 'scheduled' && (
+                  <Button className="ml-auto"
+                    onClick={() => {
+                      setSelectedSession(session);
+                      if (session.type === 'video') {
+                        setVideoModalOpen(true);
+                      } else if (session.type === 'quiz') {
+                        setQuizModalOpen(true);
+                      }
+                    }}
+                  >
+                    {session.type === 'video' ? 'Join Session' : 'Start Quiz'}
+                  </Button>
+                )}
+                {session.status === 'completed' && session.type === 'video' && (
+                  <Button className="ml-auto" variant="outline" onClick={() => {
+                    setSelectedNotes(session.notes);
+                    setIsNotesModalOpen(true);
+                  }}>
+                    View Notes
+                  </Button>
+                )}
+                {session.status === 'completed' && session.type === 'quiz' && session.quizDetails && (
+                  <Button className="ml-auto" variant="outline" onClick={() => {
+                    setSelectedQuiz(session.quizDetails);
+                    setIsQuizReviewModalOpen(true);
+                  }}>
+                    Review Quiz
+                  </Button>
+                )}
               </div>
             ))}
           </div>
         </Card>
       )}
+      <VideoPreviewModal
+        isOpen={videoModalOpen}
+        onClose={() => setVideoModalOpen(false)}
+        sessionData={{ mentorName: selectedSession?.mentorName, dateTime: selectedSession?.dateTime }}
+      />
+      <QuizModal
+        isOpen={quizModalOpen}
+        onClose={() => setQuizModalOpen(false)}
+        quizData={selectedSession?.quizDetails}
+      />
+      <QuizReviewModal
+        isOpen={isQuizReviewModalOpen}
+        onClose={() => setIsQuizReviewModalOpen(false)}
+        quizData={selectedQuiz || undefined}
+      />
+      <NotesModal
+        isOpen={isNotesModalOpen}
+        onClose={() => setIsNotesModalOpen(false)}
+        notes={selectedNotes}
+      />
     </div>
   );
 }
