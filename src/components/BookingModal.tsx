@@ -49,11 +49,19 @@ export function BookingModal({ mentor, isOpen, onClose, onBookingComplete }: Boo
   });
 
   const handleNext = () => {
-    setStep(step + 1);
+    if (step === 1 && formData.sessionType === 'message') {
+        setStep(3);
+      } else {
+        setStep(step + 1);
+      }
   };
 
   const handleBack = () => {
-    setStep(step - 1);
+    if (step === 3 && formData.sessionType === 'message') {
+        setStep(1);
+      } else {
+        setStep(step - 1);
+      }
   };
 
   const handleSubmit = () => {
@@ -137,10 +145,16 @@ export function BookingModal({ mentor, isOpen, onClose, onBookingComplete }: Boo
   const renderStep3 = () => (
     <div className="space-y-4">
       <p className="text-sm text-gray-600">
-        What topics would you like to discuss? This helps the mentor prepare for the session.
+        {formData.sessionType === 'message' 
+          ? "What would you like to discuss with the mentor?"
+          : "What topics would you like to discuss? This helps the mentor prepare for the session."
+        }
       </p>
       <Textarea
-        placeholder="E.g., Career progression in frontend development, specific technical challenges, etc."
+        placeholder={formData.sessionType === 'message'
+          ? "Write your message here..."
+          : "E.g., Career progression in frontend development, specific technical challenges, etc."
+        }
         className="h-32"
         onChange={(e) => setFormData({ ...formData, topics: e.target.value })}
       />
