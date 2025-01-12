@@ -2,6 +2,7 @@ import { useState } from 'react';
 import { Search, SlidersHorizontal, Star, Briefcase, ChevronDown } from 'lucide-react';
 import Card from '../components/ui/card';
 import Button from '../components/ui/button';
+import { BookingModal } from '../components/BookingModal';
 
 interface Mentor {
   id: number;
@@ -169,6 +170,11 @@ export function FindMentors() {
   const [selectedAvailability, setSelectedAvailability] = useState('all');
   const [sortBy, setSortBy] = useState('rating');
   const [currentPage, setCurrentPage] = useState(1);
+  const [bookedMentors, setBookedMentors] = useState<number[]>(() => {
+    const saved = localStorage.getItem('bookedMentors');
+    return saved ? JSON.parse(saved) : [];
+  });
+  const [selectedMentor, setSelectedMentor] = useState<Mentor | null>(null);
   const mentorsPerPage = 6;
 
   const sortMentors = (mentors: Mentor[]) => {
@@ -187,6 +193,18 @@ export function FindMentors() {
         default:
           return 0;
       }
+    });
+  };
+
+  const handleCloseBooking = () => {
+    setSelectedMentor(null);
+  };
+
+  const handleBookingComplete = (mentorId: number) => {
+    setBookedMentors(prev => {
+      const updated = [...prev, mentorId];
+      localStorage.setItem('bookedMentors', JSON.stringify(updated));
+      return updated;
     });
   };
 
@@ -348,7 +366,24 @@ export function FindMentors() {
                   </div>
                   <div className="mt-2 flex justify-between items-center">
                     <span className="text-sm text-gray-700 font-medium">${mentor.hourlyRate}/hr</span>
-                    <Button size="sm" className="whitespace-nowrap">Book Session</Button>
+                    {bookedMentors.includes(mentor.id) ? (
+                      <Button
+                        size="sm"
+                        className="whitespace-nowrap"
+                        disabled
+                        variant="outline"
+                      >
+                        Contacted
+                      </Button>
+                    ) : (
+                      <Button 
+                        size="sm" 
+                        className="whitespace-nowrap"
+                        onClick={() => setSelectedMentor(mentor)}
+                      >
+                        Book Session
+                      </Button>
+                    )}
                   </div>
                 </div>
               </div>
@@ -387,6 +422,14 @@ export function FindMentors() {
           </Button>
         </div>
       )}
+
+      <BookingModal
+        mentor={selectedMentor}
+        isOpen={selectedMentor !== null}
+        onClose={handleCloseBooking}
+        onBookingComplete={handleBookingComplete}
+      />
+
     </div>
   );
 }
