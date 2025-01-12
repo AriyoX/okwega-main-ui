@@ -4,6 +4,7 @@ import { MentorDashboard } from './pages/MentorDashboard';
 import { MenteeDashboard } from './pages/MenteeDashboard';
 import { SessionsPage } from './pages/SessionsPage';
 import { FindMentors } from './pages/FindMentors';
+import { CalendarPage } from './pages/CalendarPage';
 import { Header } from './components/Header';
 import { Sidebar } from './components/Sidebar';
 import './index.css';
@@ -64,6 +65,14 @@ function App() {
           element={
             <Layout>
               <SessionsPage />
+            </Layout>
+          }
+        />
+        <Route
+          path="/calendar"
+          element={
+            <Layout>
+              <CalendarPage />
             </Layout>
           }
         />

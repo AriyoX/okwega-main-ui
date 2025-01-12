@@ -6,6 +6,10 @@ import path from "path";
 export default defineConfig({
   plugins: [react()],
   optimizeDeps: {
+    include: [
+      '@radix-ui/react-popover',
+      '@radix-ui/react-tooltip'
+    ],
     exclude: ['lucide-react'],
   },
   resolve: {
