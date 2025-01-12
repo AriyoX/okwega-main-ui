@@ -12,6 +12,8 @@ import {
 } from '@/components/ui/select';
 import { VideoPreviewModal } from '@/components/VideoPreviewModal';
 import { QuizModal } from '@/components/QuizModal';
+import { QuizReviewModal } from '@/components/QuizReviewModal';
+import { NotesModal } from '@/components/NotesModal';
 
 interface Session {
   id: string;
@@ -39,19 +41,19 @@ interface Session {
 const mockSessions: Session[] = [
   {
     id: '1', mentorId: 1, mentorName: 'Sarah Wilson', mentorRole: 'Senior Software Engineer', mentorCompany: 'Google', type: 'video', status: 'scheduled', dateTime: '2025-01-15T10:00:00', duration: 60, topics: ['React', 'Frontend Architecture'] },
-  { id: '2', mentorId: 2, mentorName: 'David Kumar', mentorRole: 'Principal Engineer', mentorCompany: 'Amazon', type: 'video', status: 'completed', dateTime: '2025-01-10T15:00:00', duration: 30, topics: ['System Design', 'AWS'], rating: 5, feedback: 'Excellent session! David helped me understand microservices architecture.' },
-  { id: '3', mentorId: 3, mentorName: 'Emily Chen', mentorRole: 'Data Scientist', mentorCompany: 'Netflix', type: 'quiz', status: 'scheduled', dateTime: '2025-01-18T14:00:00', duration: 45, topics: ['Machine Learning', 'Python'], quizDetails: { quizId: 'quiz-101', title: 'Introduction to Machine Learning', totalQuestions: 20, duration: 45 } },
-  { id: '4', mentorId: 1, mentorName: 'Sarah Wilson', mentorRole: 'Senior Software Engineer', mentorCompany: 'Google', type: 'quiz', status: 'completed', dateTime: '2025-01-05T11:30:00', duration: 60, topics: ['JavaScript', 'ES6 Features'], quizDetails: { quizId: 'quiz-102', title: 'Advanced JavaScript Concepts', score: 18, totalQuestions: 20, duration: 60 }, rating: 4, feedback: 'The quiz was challenging and helped me identify areas for improvement.' },
+  { id: '2', mentorId: 2, mentorName: 'David Kumar', mentorRole: 'Principal Engineer', mentorCompany: 'Amazon', type: 'video', status: 'completed', dateTime: '2025-01-10T15:00:00', duration: 30, topics: ['System Design', 'AWS'], rating: 5, feedback: 'Excellent session! David helped me understand microservices architecture.', notes: 'Discussed the trade-offs of different architectural patterns.' },
+  { id: '3', mentorId: 3, mentorName: 'Emily Chen', mentorRole: 'Data Scientist', mentorCompany: 'Netflix', type: 'quiz', status: 'scheduled', dateTime: '2025-01-18T14:00:00', duration: 45, topics: ['Machine Learning', 'Python'], quizDetails: { quizId: 'quiz-101', title: 'Introduction to Machine Learning', totalQuestions: 20, duration: 30 } },
+  { id: '4', mentorId: 1, mentorName: 'Sarah Wilson', mentorRole: 'Senior Software Engineer', mentorCompany: 'Google', type: 'quiz', status: 'completed', dateTime: '2025-01-05T11:30:00', duration: 60, topics: ['JavaScript', 'ES6 Features'], quizDetails: { quizId: 'quiz-102', title: 'Advanced JavaScript Concepts', score: 18, totalQuestions: 20, duration: 45 }, rating: 4, feedback: 'The quiz was challenging and helped me identify areas for improvement.' },
   { id: '5', mentorId: 4, mentorName: 'John Doe', mentorRole: 'Product Manager', mentorCompany: 'Microsoft', type: 'video', status: 'scheduled', dateTime: '2025-01-22T09:00:00', duration: 45, topics: ['Product Strategy', 'Market Analysis'] },
-  { id: '6', mentorId: 2, mentorName: 'David Kumar', mentorRole: 'Principal Engineer', mentorCompany: 'Amazon', type: 'quiz', status: 'scheduled', dateTime: '2025-01-25T16:00:00', duration: 30, topics: ['Cloud Computing', 'Serverless'], quizDetails: { quizId: 'quiz-103', title: 'Serverless Architecture Fundamentals', totalQuestions: 15, duration: 30 } },
-  { id: '7', mentorId: 5, mentorName: 'Alice Brown', mentorRole: 'UX Designer', mentorCompany: 'Airbnb', type: 'video', status: 'completed', dateTime: '2024-12-20T13:00:00', duration: 50, topics: ['User Research', 'Interaction Design'], rating: 5, feedback: 'Alice provided great insights into user-centered design processes.' },
-  { id: '8', mentorId: 3, mentorName: 'Emily Chen', mentorRole: 'Data Scientist', mentorCompany: 'Netflix', type: 'quiz', status: 'completed', dateTime: '2024-12-15T17:00:00', duration: 55, topics: ['Data Analysis', 'SQL'], quizDetails: { quizId: 'quiz-104', title: 'Data Analysis with SQL', score: 16, totalQuestions: 20, duration: 55 }, rating: 4, feedback: 'Good quiz to test my SQL knowledge.' },
+  { id: '6', mentorId: 2, mentorName: 'David Kumar', mentorRole: 'Principal Engineer', mentorCompany: 'Amazon', type: 'quiz', status: 'scheduled', dateTime: '2025-01-25T16:00:00', duration: 30, topics: ['Cloud Computing', 'Serverless'], quizDetails: { quizId: 'quiz-103', title: 'Serverless Architecture Fundamentals', totalQuestions: 15, duration: 20 } },
+  { id: '7', mentorId: 5, mentorName: 'Alice Brown', mentorRole: 'UX Designer', mentorCompany: 'Airbnb', type: 'video', status: 'completed', dateTime: '2024-12-20T13:00:00', duration: 50, topics: ['User Research', 'Interaction Design'], rating: 5, feedback: 'Alice provided great insights into user-centered design processes.', notes: 'Discussed the importance of user interviews and usability testing.' },
+  { id: '8', mentorId: 3, mentorName: 'Emily Chen', mentorRole: 'Data Scientist', mentorCompany: 'Netflix', type: 'quiz', status: 'completed', dateTime: '2024-12-15T17:00:00', duration: 55, topics: ['Data Analysis', 'SQL'], quizDetails: { quizId: 'quiz-104', title: 'Data Analysis with SQL', score: 16, totalQuestions: 20, duration: 40 }, rating: 4, feedback: 'Good quiz to test my SQL knowledge.' },
   { id: '9', mentorId: 4, mentorName: 'John Doe', mentorRole: 'Product Manager', mentorCompany: 'Microsoft', type: 'video', status: 'cancelled', dateTime: '2025-01-10T14:30:00', duration: 30, topics: ['Agile Methodology', 'Sprint Planning'] },
-  { id: '10', mentorId: 5, mentorName: 'Alice Brown', mentorRole: 'UX Designer', mentorCompany: 'Airbnb', type: 'quiz', status: 'scheduled', dateTime: '2025-01-28T10:30:00', duration: 40, topics: ['Prototyping', 'Figma'], quizDetails: { quizId: 'quiz-105', title: 'Interactive Prototyping in Figma', totalQuestions: 18, duration: 40 } },
+  { id: '10', mentorId: 5, mentorName: 'Alice Brown', mentorRole: 'UX Designer', mentorCompany: 'Airbnb', type: 'quiz', status: 'scheduled', dateTime: '2025-01-28T10:30:00', duration: 40, topics: ['Prototyping', 'Figma'], quizDetails: { quizId: 'quiz-105', title: 'Interactive Prototyping in Figma', totalQuestions: 18, duration: 25 } },
   { id: '11', mentorId: 1, mentorName: 'Sarah Wilson', mentorRole: 'Senior Software Engineer', mentorCompany: 'Google', type: 'video', status: 'scheduled', dateTime: '2025-02-01T11:00:00', duration: 75, topics: ['TypeScript', 'Node.js'] },
-  { id: '12', mentorId: 2, mentorName: 'David Kumar', mentorRole: 'Principal Engineer', mentorCompany: 'Amazon', type: 'quiz', status: 'completed', dateTime: '2025-01-12T14:00:00', duration: 40, topics: ['Databases', 'NoSQL'], quizDetails: { quizId: 'quiz-106', title: 'Introduction to NoSQL Databases', score: 15, totalQuestions: 18, duration: 40 }, rating: 5, feedback: 'Very helpful quiz on NoSQL concepts.' },
-  { id: '13', mentorId: 3, mentorName: 'Emily Chen', mentorRole: 'Data Scientist', mentorCompany: 'Netflix', type: 'video', status: 'completed', dateTime: '2025-01-08T10:00:00', duration: 60, topics: ['Statistical Analysis', 'R Programming'], rating: 4, feedback: 'Good session covering the basics of statistical analysis.' },
-  { id: '14', mentorId: 4, mentorName: 'John Doe', mentorRole: 'Product Manager', mentorCompany: 'Microsoft', type: 'quiz', status: 'scheduled', dateTime: '2025-02-05T16:30:00', duration: 35, topics: ['User Stories', 'Product Backlog'], quizDetails: { quizId: 'quiz-107', title: 'Writing Effective User Stories', totalQuestions: 16, duration: 35 } },
+  { id: '12', mentorId: 2, mentorName: 'David Kumar', mentorRole: 'Principal Engineer', mentorCompany: 'Amazon', type: 'quiz', status: 'completed', dateTime: '2025-01-12T14:00:00', duration: 40, topics: ['Databases', 'NoSQL'], quizDetails: { quizId: 'quiz-106', title: 'Introduction to NoSQL Databases', score: 15, totalQuestions: 18, duration: 35 }, rating: 5, feedback: 'Very helpful quiz on NoSQL concepts.' },
+  { id: '13', mentorId: 3, mentorName: 'Emily Chen', mentorRole: 'Data Scientist', mentorCompany: 'Netflix', type: 'video', status: 'completed', dateTime: '2025-01-08T10:00:00', duration: 60, topics: ['Statistical Analysis', 'R Programming'], rating: 4, feedback: 'Good session covering the basics of statistical analysis.', notes: 'Covered topics like hypothesis testing and regression analysis.' },
+  { id: '14', mentorId: 4, mentorName: 'John Doe', mentorRole: 'Product Manager', mentorCompany: 'Microsoft', type: 'quiz', status: 'scheduled', dateTime: '2025-02-05T16:30:00', duration: 35, topics: ['User Stories', 'Product Backlog'], quizDetails: { quizId: 'quiz-107', title: 'Writing Effective User Stories', totalQuestions: 16, duration: 28 } },
   { id: '15', mentorId: 5, mentorName: 'Alice Brown', mentorRole: 'UX Designer', mentorCompany: 'Airbnb', type: 'video', status: 'scheduled', dateTime: '2025-02-10T09:30:00', duration: 50, topics: ['Usability Testing', 'A/B Testing'] },
 ];
 
@@ -65,6 +67,10 @@ export function SessionsPage() {
   const [quizModalOpen, setQuizModalOpen] = useState(false);
   const [selectedSession, setSelectedSession] = useState<Session | null>(null);
   const itemsPerPage = 5; // You can adjust this value
+  const [isQuizReviewModalOpen, setIsQuizReviewModalOpen] = useState(false);
+  const [isNotesModalOpen, setIsNotesModalOpen] = useState(false);
+  const [selectedQuiz, setSelectedQuiz] = useState<Session['quizDetails'] | null>(null);
+  const [selectedNotes, setSelectedNotes] = useState<string | undefined>(undefined);
 
   const filterSessions = (sessions: Session[]) => {
     return sessions.filter(session => {
@@ -297,12 +303,18 @@ export function SessionsPage() {
                       </Button>
                     )}
                     {session.type === 'video' && (
-                      <Button variant="outline">
+                      <Button variant="outline" onClick={() => {
+                        setSelectedNotes(session.notes);
+                        setIsNotesModalOpen(true);
+                      }}>
                         View Notes
                       </Button>
                     )}
-                    {session.type === 'quiz' && (
-                      <Button variant="outline">
+                    {session.type === 'quiz' && session.quizDetails && (
+                      <Button variant="outline" onClick={() => {
+                        setSelectedQuiz(session.quizDetails);
+                        setIsQuizReviewModalOpen(true);
+                      }}>
                         Review Quiz
                       </Button>
                     )}
@@ -362,7 +374,16 @@ export function SessionsPage() {
         onClose={() => setQuizModalOpen(false)}
         quizData={selectedSession?.quizDetails}
       />
-
+      <QuizReviewModal
+        isOpen={isQuizReviewModalOpen}
+        onClose={() => setIsQuizReviewModalOpen(false)}
+        quizData={selectedQuiz || undefined}
+      />
+      <NotesModal
+        isOpen={isNotesModalOpen}
+        onClose={() => setIsNotesModalOpen(false)}
+        notes={selectedNotes}
+      />
     </div>
   );
 }
