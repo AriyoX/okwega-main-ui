@@ -2,6 +2,7 @@ import { useState } from 'react';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import { MentorDashboard } from './pages/MentorDashboard';
 import { MenteeDashboard } from './pages/MenteeDashboard';
+import { SessionsPage } from './pages/SessionsPage';
 import { FindMentors } from './pages/FindMentors';
 import { Header } from './components/Header';
 import { Sidebar } from './components/Sidebar';
@@ -55,6 +56,14 @@ function App() {
           element={
             <Layout>
               <FindMentors />
+            </Layout>
+          }
+        />
+        <Route
+          path="/sessions"
+          element={
+            <Layout>
+              <SessionsPage />
             </Layout>
           }
         />
