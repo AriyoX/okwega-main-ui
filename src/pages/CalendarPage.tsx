@@ -234,7 +234,7 @@ export function CalendarPage() {
 
       {/* Calendar Navigation */}
       <div className="flex justify-between items-center">
-        <div className="flex items-center gap-1">
+        <div className="flex items-center gap-2">
           <Button variant="outline" size="icon" onClick={handlePrevMonth}>
             <ChevronLeft className="h-4 w-4" />
           </Button>
@@ -268,7 +268,7 @@ export function CalendarPage() {
         </div>
 
         {/* Calendar days */}
-        <div className="grid grid-cols-7 gap-px bg-gray-100 rounded-md">
+        <div className="grid grid-cols-7 gap-px bg-white rounded-md">
           {renderCalendarDays()}
         </div>
       </Card>
