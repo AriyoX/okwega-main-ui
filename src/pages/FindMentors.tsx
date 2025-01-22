@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { Search, SlidersHorizontal, Star, Briefcase } from 'lucide-react';
-import Card from '../components/ui/card';
+import Card from '../components/ui/card-1';
 import Button from '../components/ui/button';
 import { BookingModal } from '../components/BookingModal';
 import {

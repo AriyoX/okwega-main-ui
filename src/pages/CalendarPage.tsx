@@ -13,7 +13,7 @@ import {
   SelectValue,
 } from '@/components/ui/select';
 import Button from '@/components/ui/button';
-import Card from '@/components/ui/card';
+import Card from '@/components/ui/card-1';
 import { VideoPreviewModal } from '@/components/VideoPreviewModal';
 import { QuizModal } from '@/components/QuizModal';
 import { QuizReviewModal } from '@/components/QuizReviewModal';
@@ -194,7 +194,7 @@ export function CalendarPage() {
         <div>
           <h1 className="text-2xl font-semibold text-gray-900">Calendar</h1>
           <p className="mt-1 text-sm text-gray-500">
-            View and manage your upcoming mentoring sessions
+            View and manage your upcoming mentoring sessions.
           </p>
         </div>
 

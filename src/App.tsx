@@ -8,6 +8,7 @@ import { CalendarPage } from './pages/CalendarPage';
 import { Header } from './components/Header';
 import { Sidebar } from './components/Sidebar';
 import './index.css';
+import LearningPathPage from './pages/LearningPathPage';
 
 function App() {
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
@@ -73,6 +74,14 @@ function App() {
           element={
             <Layout>
               <CalendarPage />
+            </Layout>
+          }
+        />
+        <Route
+          path="/learning-path"
+          element={
+            <Layout>
+              <LearningPathPage />
             </Layout>
           }
         />
