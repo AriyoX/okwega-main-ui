@@ -11,6 +11,7 @@ import './index.css';
 import LearningPathPage from './pages/LearningPathPage';
 import MessagesPage from './pages/MessagePage';
 import ResourcesPage from './pages/ResourcesPage';
+import MenteePage from './pages/MenteesPage';
 
 function App() {
     const [isSidebarOpen, setIsSidebarOpen] = useState(false);
@@ -114,6 +115,14 @@ function App() {
                     element={
                         <Layout>
                             <ResourcesPage />
+                        </Layout>
+                    }
+                />
+                 <Route
+                    path="/mentees"
+                    element={
+                        <Layout>
+                            <MenteePage />
                         </Layout>
                     }
                 />
