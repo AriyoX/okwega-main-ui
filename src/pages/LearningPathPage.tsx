@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { BookOpen, CheckCircle, Clock, Trophy, FileText, Video, ExternalLink, MessageSquare, ChevronRight } from 'lucide-react';
+import { BookOpen, CheckCircle, Clock, FileText, Video, ExternalLink, MessageSquare, ChevronRight } from 'lucide-react';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Progress } from '@/components/ui/progress';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
@@ -384,13 +384,6 @@ export default function LearningPathPage() {
                   <div>
                     <p className="text-sm text-gray-600">Hours Completed</p>
                     <p className="font-medium">{activePath.completedHours}/{activePath.totalHours}</p>
-                  </div>
-                </div>
-                <div className="flex items-center gap-2">
-                  <Trophy className="w-4 h-4 text-yellow-500" />
-                  <div>
-                    <p className="text-sm text-gray-600">Achievements</p>
-                    <p className="font-medium">3 Earned</p>
                   </div>
                 </div>
               </div>

@@ -10,6 +10,7 @@ import { Sidebar } from './components/Sidebar';
 import './index.css';
 import LearningPathPage from './pages/LearningPathPage';
 import MessagesPage from './pages/MessagePage';
+import ResourcesPage from './pages/ResourcesPage';
 
 function App() {
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
@@ -91,6 +92,14 @@ function App() {
           element={
             <Layout>
               <MessagesPage />
+            </Layout>
+          }
+        />
+        <Route
+          path="/resources"
+          element={
+            <Layout>
+              <ResourcesPage />
             </Layout>
           }
         />
