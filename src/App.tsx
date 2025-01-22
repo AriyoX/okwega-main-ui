@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import React, { useState } from 'react';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import { MentorDashboard } from './pages/MentorDashboard';
 import { MenteeDashboard } from './pages/MenteeDashboard';
@@ -13,99 +13,113 @@ import MessagesPage from './pages/MessagePage';
 import ResourcesPage from './pages/ResourcesPage';
 
 function App() {
-  const [isSidebarOpen, setIsSidebarOpen] = useState(false);
-  const userRole = 'mentee';
-  const user = {
-    name: 'John Doe',
-    avatar: undefined
-  };
+    const [isSidebarOpen, setIsSidebarOpen] = useState(false);
+    const [userRole, setUserRole] = useState<'mentor' | 'mentee'>('mentor'); // Initialize with 'mentor'
+    const user = {
+        name: 'John Doe',
+        avatar: undefined,
+    };
 
-  const Layout = ({ children }: { children: React.ReactNode }) => (
-    <div className="min-h-screen">
-      <Header
-        user={user}
-        onMenuClick={() => setIsSidebarOpen(true)}
-      />
-      <div className="flex pt-16">
-        <Sidebar
-          role={userRole}
-          user={user}
-          isOpen={isSidebarOpen}
-          onClose={() => setIsSidebarOpen(false)}
-        />
-        <main className="flex-1 overflow-y-auto p-6">
-          {children}
-        </main>
-      </div>
-    </div>
-  );
+    const toggleUserRole = () => {
+        setUserRole(prevRole => (prevRole === 'mentor' ? 'mentee' : 'mentor'));
+    };
 
-  return (
-    <Router>
-      <Routes>
-        <Route
-          path="/"
-          element={
-            <Layout>
-              {userRole === 'mentor' ? (
-                <MentorDashboard />
-              ) : (
-                <MenteeDashboard />
-              )}
-            </Layout>
-          }
-        />
-        <Route
-          path="/mentors"
-          element={
-            <Layout>
-              <FindMentors />
-            </Layout>
-          }
-        />
-        <Route
-          path="/sessions"
-          element={
-            <Layout>
-              <SessionsPage />
-            </Layout>
-          }
-        />
-        <Route
-          path="/calendar"
-          element={
-            <Layout>
-              <CalendarPage />
-            </Layout>
-          }
-        />
-        <Route
-          path="/learning-path"
-          element={
-            <Layout>
-              <LearningPathPage />
-            </Layout>
-          }
-        />
-        <Route
-          path="/messages"
-          element={
-            <Layout>
-              <MessagesPage />
-            </Layout>
-          }
-        />
-        <Route
-          path="/resources"
-          element={
-            <Layout>
-              <ResourcesPage />
-            </Layout>
-          }
-        />
-      </Routes>
-    </Router>
-  );
+
+    const Layout = ({ children }: { children: React.ReactNode }) => (
+        <div className="min-h-screen">
+            <Header
+                user={user}
+                onMenuClick={() => setIsSidebarOpen(true)}
+            />
+            <div className="flex pt-16">
+                <Sidebar
+                    role={userRole}
+                    user={user}
+                    isOpen={isSidebarOpen}
+                    onClose={() => setIsSidebarOpen(false)}
+                />
+                <main className="flex-1 overflow-y-auto p-6">
+                     {/* Role Toggle Button */}
+                    <div className="mb-4 text-right">
+                      <button
+                        onClick={toggleUserRole}
+                        className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
+                      >
+                        Switch to {userRole === 'mentor' ? 'Mentee' : 'Mentor'}
+                      </button>
+                    </div>
+                    {children}
+                </main>
+            </div>
+        </div>
+    );
+
+    return (
+        <Router>
+            <Routes>
+                <Route
+                    path="/"
+                    element={
+                        <Layout>
+                            {userRole === 'mentor' ? (
+                                <MentorDashboard />
+                            ) : (
+                                <MenteeDashboard />
+                            )}
+                        </Layout>
+                    }
+                />
+                <Route
+                    path="/mentors"
+                    element={
+                        <Layout>
+                            <FindMentors />
+                        </Layout>
+                    }
+                />
+                <Route
+                    path="/sessions"
+                    element={
+                        <Layout>
+                            <SessionsPage />
+                        </Layout>
+                    }
+                />
+                <Route
+                    path="/calendar"
+                    element={
+                        <Layout>
+                            <CalendarPage />
+                        </Layout>
+                    }
+                />
+                <Route
+                    path="/learning-path"
+                    element={
+                        <Layout>
+                            <LearningPathPage />
+                        </Layout>
+                    }
+                />
+                 <Route
+                    path="/messages"
+                    element={
+                        <Layout>
+                            <MessagesPage />
+                        </Layout>
+                    }
+                />
+                 <Route
+                    path="/resources"
+                    element={
+                        <Layout>
+                            <ResourcesPage />
+                        </Layout>
+                    }
+                />
+            </Routes>
+        </Router>
+    );
 }
 
 export default App;
