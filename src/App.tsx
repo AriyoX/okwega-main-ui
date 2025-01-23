@@ -12,6 +12,8 @@ import LearningPathPage from './pages/LearningPathPage';
 import MessagesPage from './pages/MessagePage';
 import ResourcesPage from './pages/ResourcesPage';
 import MenteePage from './pages/MenteesPage';
+import CreateLearningPath from './pages/CreateLearningPath';
+import ViewLearningPath from './pages/ViewLearningPath'; 
 
 function App() {
     const [isSidebarOpen, setIsSidebarOpen] = useState(false);
@@ -126,6 +128,22 @@ function App() {
                         </Layout>
                     }
                 />
+                <Route 
+                    path="mentees/:menteeId/learning-path/create" 
+                    element={
+                        <Layout>
+                          <CreateLearningPath />
+                        </Layout>
+                      }
+                  />
+                <Route 
+                    path="mentees/:menteeId/learning-path/" 
+                    element={
+                        <Layout>
+                          <ViewLearningPath />
+                        </Layout>
+                      }
+                  />
             </Routes>
         </Router>
     );

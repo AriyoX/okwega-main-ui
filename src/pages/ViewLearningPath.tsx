@@ -16,6 +16,8 @@ import Button from '@/components/ui/button';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import { VideoPreviewModal } from '@/components/VideoPreviewModal';
 import { QuizModal } from '@/components/QuizModal';
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
+import { getLearningPath } from '../services/MockData';
 
 // Using the same interfaces from the learning path page
 interface Session {

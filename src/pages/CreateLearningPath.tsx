@@ -6,6 +6,8 @@ import { Input } from '@/components/ui/input';
 import { Textarea } from '@/components/ui/textarea';
 import Button from '@/components/ui/button';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
+import { createLearningPath } from '../services/MockData';
 
 interface Module {
   id: string;
@@ -108,7 +110,7 @@ export default function CreateLearningPath() {
     // Here you would typically make an API call to save the learning path
     console.log('Submitting learning path:', formData);
     // Navigate to the view page after successful creation
-    navigate(`/mentor/mentee/${menteeId}/learning-path`);
+    navigate(`/mentees/${menteeId}/learning-path`);
   };
 
   return (

@@ -19,6 +19,7 @@ import {
 import Button from '@/components/ui/button';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { VideoPreviewModal } from '@/components/VideoPreviewModal';
+import { mockMentees } from '../services/MockData';
 
 // Updated Types
 interface Mentee {
@@ -94,86 +95,6 @@ interface LearningPath {
   };
 }
 
-// Updated mock data
-const mockMentees: Mentee[] = [
-  {
-    id: '1',
-    name: 'John Doe',
-    email: 'john@example.com',
-    status: 'pending',
-    initialSession: {
-      type: 'video',
-      sessionType: 'introductory',
-      description: '30-minute introductory call to discuss learning goals and expectations',
-      dateTime: '2025-02-01T10:00:00'
-    }
-  },
-  {
-    id: '2',
-    name: 'Jane Smith',
-    email: 'jane@example.com',
-    status: 'pending',
-    initialSession: {
-      type: 'video',
-      sessionType: 'consultory',
-      description: '45-minute consultation to review technical challenges and provide guidance',
-      dateTime: '2025-02-02T14:30:00'
-    }
-  },
-  {
-    id: '3',
-    name: 'Alice Johnson',
-    email: 'alice@example.com',
-    status: 'pending',
-    initialSession: {
-      type: 'video',
-      sessionType: 'full',
-      description: '60-minute comprehensive mentoring session focusing on advanced React concepts',
-      dateTime: '2025-02-03T11:00:00'
-    }
-  },
-  {
-    id: '4',
-    name: 'Bob Wilson',
-    email: 'bob@example.com',
-    status: 'pending',
-    initialSession: {
-      type: 'message',
-      description: 'Direct messaging to discuss potential mentorship opportunity'
-    }
-  },
-  {
-    id: '5',
-    name: 'Sarah Chen',
-    email: 'sarah@example.com',
-    status: 'active',
-    initialSession: {
-      type: 'video',
-      sessionType: 'full',
-      description: 'Regular mentoring session',
-      dateTime: '2025-01-15T09:00:00'
-    },
-    learningPath: {
-      id: 'lp1',
-      title: 'Frontend Development',
-      description: 'Complete frontend development pathway',
-      progress: 30,
-      totalHours: 40,
-      completedHours: 12,
-      mentorId: 1,
-      mentorName: 'David Kumar',
-      modules: [],
-      totalSessions: 10,
-      completedSessions: 3,
-      mentor: {
-        id: 1,
-        name: 'David Kumar',
-        avatar: '',
-        role: 'Senior Developer'
-      }
-    }
-  }
-];
 
 const MenteesPage = () => {
   const navigate = useNavigate();
@@ -198,11 +119,11 @@ const MenteesPage = () => {
   };
 
   const handleCreateLearningPath = (menteeId: string) => {
-    navigate(`/mentor/mentee/${menteeId}/learning-path/create`);
+    navigate(`/mentees/${menteeId}/learning-path/create`);
   };
 
   const handleViewLearningPath = (menteeId: string) => {
-    navigate(`/mentor/mentee/${menteeId}/learning-path`);
+    navigate(`/mentees/${menteeId}/learning-path`);
   };
 
   const handleJoinSession = (mentee: Mentee) => {
