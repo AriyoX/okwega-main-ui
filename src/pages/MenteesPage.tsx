@@ -162,8 +162,8 @@ const MenteesPage = () => {
   };
 
   return (
-    <div className="max-w-7xl mx-auto px-6 py-8">
-      <h1 className="text-2xl font-semibold mb-6">My Mentees</h1>
+    <div className="max-w-7xl mx-auto px-4 sm:px-6 py-4 sm:py-8">
+      <h1 className="text-xl sm:text-2xl font-semibold mb-4 sm:mb-6">My Mentees</h1>
       
       <Tabs defaultValue="pending">
         <TabsList>
@@ -177,9 +177,9 @@ const MenteesPage = () => {
               .filter(mentee => mentee.status === 'pending')
               .map(mentee => (
                 <Card key={mentee.id}>
-                  <CardContent className="p-6">
-                    <div className="flex items-center justify-between">
-                      <div>
+                  <CardContent className="p-4 sm:p-6">
+                    <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
+                      <div className="space-y-2">
                         <h3 className="font-semibold">{mentee.name}</h3>
                         <p className="text-sm text-gray-500">{mentee.email}</p>
                         <div className="flex items-center gap-2 mt-2">
@@ -208,15 +208,17 @@ const MenteesPage = () => {
                           </div>
                         )}
                       </div>
-                      <div className="flex gap-2">
+                      <div className="flex flex-col sm:flex-row gap-2">
                         <Button 
                           variant="outline"
+                          className="w-full sm:w-auto"
                           onClick={() => handleJoinSession(mentee)}
                         >
                           {mentee.initialSession.type === 'video' ? 'Join Session' : 'Message'}
                         </Button>
                         <Button 
                           variant="primary"
+                          className="w-full sm:w-auto"
                           onClick={() => handleAcceptMentee(mentee.id)}
                         >
                           <Check className="h-4 w-4 mr-2" />
@@ -224,6 +226,7 @@ const MenteesPage = () => {
                         </Button>
                         <Button 
                           variant="destructive"
+                          className="w-full sm:w-auto"
                           onClick={() => handleRejectMentee(mentee.id)}
                         >
                           <X className="h-4 w-4 mr-2" />

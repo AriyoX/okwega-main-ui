@@ -17,6 +17,10 @@ import ViewLearningPath from './pages/ViewLearningPath';
 import { MentorSessionsPage } from './pages/SessionsMentor'
 import EditLearningPath from './pages/EditLearningPath';
 import MentorAnalytics from './pages/MentorAnalytics';
+import SettingsPage from './pages/SettingsMentorPage';
+import MenteeSettingsPage from './pages/SettingsPageMentee';
+import PaymentsPage from './pages/PaymentsPage';
+import MentorPaymentsPage from './pages/PaymentsPageMentor';
 
 function App() {
     const [isSidebarOpen, setIsSidebarOpen] = useState(false);
@@ -144,6 +148,38 @@ function App() {
                     element={
                         <Layout>
                             <MenteePage />
+                        </Layout>
+                    }
+                />
+                <Route
+                    path="/settings-mentor"
+                    element={
+                        <Layout>
+                            <SettingsPage />
+                        </Layout>
+                    }
+                />
+                <Route
+                    path="/settings"
+                    element={
+                        <Layout>
+                            <MenteeSettingsPage />
+                        </Layout>
+                    }
+                />
+                <Route
+                    path="/payments"
+                    element={
+                        <Layout>
+                            <PaymentsPage />
+                        </Layout>
+                    }
+                />
+                <Route
+                    path="/payments-mentor"
+                    element={
+                        <Layout>
+                            <MentorPaymentsPage />
                         </Layout>
                     }
                 />

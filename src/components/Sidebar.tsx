@@ -33,7 +33,7 @@ export function Sidebar({ role, user, isOpen, onClose }: SidebarProps) {
     { icon: MessageSquare, label: 'Messages', path: '/messages' },
     { icon: BarChart2, label: 'Analytics', path: '/analytics' },
     { icon: CreditCard, label: 'Payments', path: '/payments-mentor' },
-    { icon: Settings, label: 'Settings', path: '/settings' },
+    { icon: Settings, label: 'Settings', path: '/settings-mentor' },
   ];
 
   const menteeNavItems: NavItem[] = [
