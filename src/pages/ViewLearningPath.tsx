@@ -1,14 +1,8 @@
 import { useState } from 'react';
-import { useParams } from 'react-router-dom';
+import { useParams, useNavigate } from 'react-router-dom';
 import { 
-  BookOpen, 
-  Video, 
-  FileText, 
-  CheckCircle, 
-  Clock, 
-  MessageSquare,
-  ChevronRight,
-  Users
+  BookOpen, Video, FileText, CheckCircle, Clock, 
+  MessageSquare, ChevronRight, Users, Edit
 } from 'lucide-react';
 import { Card, CardHeader, CardTitle, CardContent } from '@/components/ui/card';
 import { Progress } from '@/components/ui/progress';
@@ -16,10 +10,7 @@ import Button from '@/components/ui/button';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import { VideoPreviewModal } from '@/components/VideoPreviewModal';
 import { QuizModal } from '@/components/QuizModal';
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
-import { getLearningPath } from '../services/MockData';
 
-// Using the same interfaces from the learning path page
 interface Session {
   id: string;
   learningPathId: string;
@@ -48,53 +39,77 @@ interface Session {
 
 export default function ViewLearningPath() {
   const { menteeId } = useParams();
+  const navigate = useNavigate();
   const [videoModalOpen, setVideoModalOpen] = useState(false);
   const [quizModalOpen, setQuizModalOpen] = useState(false);
   const [selectedSession, setSelectedSession] = useState<Session | null>(null);
 
-  // Mock data for demonstration
+  // Mock data with complete structure
   const learningPath = {
-    title: 'Frontend Development Path',
-    description: 'Complete guide to modern frontend development',
-    progress: 70,
-    totalHours: 40,
-    completedHours: 28,
-    mentee: {
-      id: menteeId,
-      name: 'John Doe',
-      avatar: '/api/placeholder/32/32',
-      email: 'john@example.com'
-    },
-    modules: [
-      {
-        id: 1,
-        title: 'React Fundamentals',
-        completed: true,
-        resources: [
-          { id: 1, title: 'React Basics Guide', type: 'document' },
-          { id: 2, title: 'Component Architecture', type: 'video' }
-        ],
-        sessions: [
-          {
-            id: 'session-1',
-            learningPathId: 'path-1',
-            learningPathTitle: 'Frontend Development Path',
-            sessionNumber: 1,
-            mentorId: 1,
-            mentorName: 'Sarah Wilson',
-            mentorRole: 'Senior Software Engineer',
-            mentorCompany: 'Google',
-            type: 'video' as const,
-            status: 'completed' as const,
-            dateTime: '2024-01-10T15:00',
-            duration: 60,
-            topics: ['React Basics', 'Components'],
-            rating: 5,
-            feedback: 'Great session! The mentee showed good understanding of React basics.'
-          }
-        ]
-      }
-    ]
+      id: 'lp-1',
+      title: 'Frontend Development Path',
+      description: 'Complete guide to modern frontend development',
+      progress: 70,
+      totalHours: 40,
+      completedHours: 28,
+      mentee: {
+        id: menteeId,
+        name: 'John Doe',
+        avatar: '/api/placeholder/32/32',
+        email: 'john@example.com'
+      },
+      modules: [
+        {
+          id: 'mod-1',
+          title: 'React Fundamentals',
+          completed: true,
+          resources: [
+            { id: 'res-1', title: 'React Basics Guide', type: 'document' },
+            { id: 'res-2', title: 'Component Architecture', type: 'video' }
+          ],
+          sessions: [
+            {
+              id: 'session-1',
+              learningPathId: 'lp-1',
+              learningPathTitle: 'Frontend Development Path',
+              sessionNumber: 1,
+              mentorId: 1,
+              mentorName: 'Sarah Wilson',
+              mentorRole: 'Senior Software Engineer',
+              mentorCompany: 'Google',
+              type: 'video' as const,
+              status: 'completed' as const,
+              dateTime: '2024-01-10T15:00',
+              duration: 60,
+              topics: ['React Basics', 'Components'],
+              rating: 5,
+              feedback: 'Great session! The mentee showed good understanding of React basics.'
+            }
+          ]
+        }
+      ]
+    };
+
+  const handleEdit = () => {
+    const formReadyData = {
+      ...learningPath,
+      modules: learningPath.modules.map(module => ({
+        ...module,
+        resources: module.resources.map(resource => ({
+          ...resource,
+          url: '' // Add empty URL field for form compatibility
+        })),
+        sessions: module.sessions.map(session => ({
+          ...session,
+          title: `Session ${session.sessionNumber}`, // Add title field for form
+          description: session.feedback || '' // Map feedback to description
+        }))
+      }))
+    };
+    
+    navigate(`/mentees/${menteeId}/learning-path/edit`, {
+      state: { initialData: formReadyData }
+    });
   };
 
   const renderSessionCard = (session: Session) => (
@@ -187,8 +202,9 @@ export default function ViewLearningPath() {
             </h1>
             <p className="text-gray-500 mt-1">{learningPath.description}</p>
           </div>
-          <Button variant="outline">
-            Edit Learning Path
+          <Button variant="outline" onClick={handleEdit}>
+            <Edit className="h-4 w-4 mr-2" />
+              Edit Learning Path
           </Button>
         </div>
       </div>

@@ -217,11 +217,7 @@ export const mockMentees: Mentee[] = [
     return newId;
   }
   
-  export function updateLearningPath(pathId: string, updates: Partial<LearningPath>): void {
-    if (mockLearningPaths[pathId]) {
-      mockLearningPaths[pathId] = {
-        ...mockLearningPaths[pathId],
-        ...updates
-      };
-    }
-  }
+  export const updateLearningPath = async (pathData: LearningPath) => {
+    // Mock API call
+    return new Promise(resolve => setTimeout(() => resolve(pathData), 500));
+  };

@@ -15,6 +15,8 @@ import MenteePage from './pages/MenteesPage';
 import CreateLearningPath from './pages/CreateLearningPath';
 import ViewLearningPath from './pages/ViewLearningPath'; 
 import { MentorSessionsPage } from './pages/SessionsMentor'
+import EditLearningPath from './pages/EditLearningPath';
+import MentorAnalytics from './pages/MentorAnalytics';
 
 function App() {
     const [isSidebarOpen, setIsSidebarOpen] = useState(false);
@@ -130,6 +132,14 @@ function App() {
                     }
                 />
                  <Route
+                    path="/analytics"
+                    element={
+                        <Layout>
+                            <MentorAnalytics />
+                        </Layout>
+                    }
+                />
+                 <Route
                     path="/mentees"
                     element={
                         <Layout>
@@ -142,6 +152,14 @@ function App() {
                     element={
                         <Layout>
                           <CreateLearningPath />
+                        </Layout>
+                      }
+                  />
+                  <Route 
+                    path="mentees/:menteeId/learning-path/edit" 
+                    element={
+                        <Layout>
+                          <EditLearningPath />
                         </Layout>
                       }
                   />

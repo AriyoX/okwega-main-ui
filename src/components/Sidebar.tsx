@@ -31,7 +31,6 @@ export function Sidebar({ role, user, isOpen, onClose }: SidebarProps) {
     { icon: List, label: 'Sessions', path: '/sessions-mentor' },
     { icon: Calendar, label: 'Calendar', path: '/calendar' },
     { icon: MessageSquare, label: 'Messages', path: '/messages' },
-    { icon: Folder, label: 'Resources', path: '/resources-mentor' },
     { icon: BarChart2, label: 'Analytics', path: '/analytics' },
     { icon: CreditCard, label: 'Payments', path: '/payments-mentor' },
     { icon: Settings, label: 'Settings', path: '/settings' },
