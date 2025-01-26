@@ -14,6 +14,7 @@ import ResourcesPage from './pages/ResourcesPage';
 import MenteePage from './pages/MenteesPage';
 import CreateLearningPath from './pages/CreateLearningPath';
 import ViewLearningPath from './pages/ViewLearningPath'; 
+import { MentorSessionsPage } from './pages/SessionsMentor'
 
 function App() {
     const [isSidebarOpen, setIsSidebarOpen] = useState(false);
@@ -85,6 +86,14 @@ function App() {
                     element={
                         <Layout>
                             <SessionsPage />
+                        </Layout>
+                    }
+                />
+                <Route
+                    path="/sessions-mentor"
+                    element={
+                        <Layout>
+                            <MentorSessionsPage />
                         </Layout>
                     }
                 />
