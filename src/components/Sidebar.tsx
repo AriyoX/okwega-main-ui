@@ -20,9 +20,10 @@ interface SidebarProps {
   user: User;
   isOpen: boolean;
   onClose: () => void;
+  onToggleRole: () => void; 
 }
 
-export function Sidebar({ role, user, isOpen, onClose }: SidebarProps) {
+export function Sidebar({ role, user, isOpen, onClose, onToggleRole }: SidebarProps) {
   const location = useLocation();
   
   const mentorNavItems: NavItem[] = [
@@ -67,6 +68,7 @@ export function Sidebar({ role, user, isOpen, onClose }: SidebarProps) {
           transform ${isOpen ? 'translate-x-0' : '-translate-x-full'}
           lg:translate-x-0 transition-transform duration-200 ease-in-out
           bg-white border-r border-gray-200 pt-16 lg:pt-0
+          flex flex-col // Add this
         `}
       >
         {/* Mobile Close Button */}
@@ -128,6 +130,16 @@ export function Sidebar({ role, user, isOpen, onClose }: SidebarProps) {
               );
             })}
           </nav>
+
+          <div className="p-4 border-t border-gray-200">
+            <button
+              onClick={onToggleRole}
+              className="w-full bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
+            >
+              Switch to {role === 'mentor' ? 'Mentee' : 'Mentor'}
+            </button>
+          </div>
+
         </div>
       </aside>
     </>

@@ -47,17 +47,9 @@ function App() {
                     user={user}
                     isOpen={isSidebarOpen}
                     onClose={() => setIsSidebarOpen(false)}
+                    onToggleRole={toggleUserRole} 
                 />
                 <main className="flex-1 overflow-y-auto p-6">
-                     {/* Role Toggle Button */}
-                    <div className="mb-4 text-right">
-                      <button
-                        onClick={toggleUserRole}
-                        className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
-                      >
-                        Switch to {userRole === 'mentor' ? 'Mentee' : 'Mentor'}
-                      </button>
-                    </div>
                     {children}
                 </main>
             </div>
